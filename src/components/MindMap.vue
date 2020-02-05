@@ -1,5 +1,15 @@
 <template>
   <svg id="mindmap" v-bind:width="width" v-bind:height="height">
+    <transition-group tag="g" name="line">
+      <path
+        v-for="link in links"
+        class="link"
+        v-bind:key="link.id"
+        v-bind:d="link.d"
+        v-bind:style="link.style"
+      ></path>
+    </transition-group>
+
     <transition-group tag="g" name="list">
       <g
         class="node"
@@ -37,14 +47,22 @@ export default class MindMap extends Vue {
   @State private rootNode!: NodeModel
 
   @Getter private nodes!: any
+  @Getter private links!: any
+
+  private select(index: number, node: NodeModel) {
+    console.log(node)
+  }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
 .node
-  fill: white
+  fill white
+
+.link
+  fill none
 
 #mindmap
-  border: 1px dashed gray
+  border 1px dashed gray
 </style>
