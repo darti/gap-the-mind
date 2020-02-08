@@ -19,4 +19,11 @@ export default class App extends Vue {}
 <style lang="stylus">
 html
   background-color :rgb(30, 32, 35)
+
+body
+  margin 0
+
+#app
+  width 100vw
+  height 100vh
 </style>

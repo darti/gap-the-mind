@@ -1,5 +1,5 @@
 <template>
-  <svg id="mindmap" v-bind:width="width" v-bind:height="height">
+  <svg id="mindmap" :style="svgStyle">
     <transition-group tag="g" name="line">
       <path
         v-for="link in links"
@@ -41,13 +41,12 @@ import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 
 @Component
 export default class MindMap extends Vue {
-  @State private width!: number
-  @State private height!: number
-
   @State private rootNode!: NodeModel
 
   @Getter private nodes!: any
   @Getter private links!: any
+
+  private svgStyle = {}
 
   private select(index: number, node: NodeModel) {
     console.log(node)
@@ -64,5 +63,6 @@ export default class MindMap extends Vue {
   fill none
 
 #mindmap
-  border 1px dashed gray
+  width 100%
+  height 100%
 </style>
