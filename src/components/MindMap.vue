@@ -1,5 +1,5 @@
 <template>
-  <svg id="mindmap" :style="svgStyle">
+  <svg id="mindmap" :style="svgStyle" viewBox="-500 -500 1000 1000">
     <transition-group tag="g" name="line">
       <path
         v-for="link in links"
@@ -7,7 +7,7 @@
         v-bind:key="link.id"
         v-bind:d="link.d"
         v-bind:style="link.style"
-      ></path>
+      />
     </transition-group>
 
     <transition-group tag="g" name="list">
@@ -19,15 +19,13 @@
         v-bind:style="node.style"
         v-bind:class="[node.className, { highlight: node.highlight }]"
       >
-        <circle v-bind:r="node.r"></circle>
+        <circle v-bind:r="node.r" />
 
         <text
           v-bind:dx="node.textpos.x"
           v-bind:dy="node.textpos.y"
           v-bind:style="node.textStyle"
-        >
-          {{ node.text }}
-        </text>
+        >{{ node.text }}</text>
       </g>
     </transition-group>
   </svg>
@@ -56,13 +54,16 @@ export default class MindMap extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="stylus">
-.node
-  fill white
+.node {
+  fill: white;
+}
 
-.link
-  fill none
+.link {
+  fill: none;
+}
 
-#mindmap
-  width 100%
-  height 100%
+#mindmap {
+  width: 100%;
+  height: 100%;
+}
 </style>

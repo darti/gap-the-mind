@@ -1,7 +1,9 @@
 import Vue from "vue"
-import Vuex from "vuex"
+import Vuex, { mapGetters } from "vuex"
 import { MindMapModel } from "@/models/mindmap"
 import { hierarchy, cluster, tree } from "d3"
+
+const RADIUS = 500
 
 Vue.use(Vuex)
 
@@ -28,7 +30,7 @@ export default new Vuex.Store<MindMapModel>({
   modules: {},
   getters: {
     root: (state, getters) => getters.tree(hierarchy(state.rootNode)),
-    tree: state => tree().size([800, 500]),
+    tree: state => tree().size([RADIUS, RADIUS]),
     nodes: (state, getters) => {
       if (getters.root) return getters.root.descendants().map(mapNode)
     },
@@ -42,13 +44,19 @@ export default new Vuex.Store<MindMapModel>({
   }
 })
 
+function project(x: number, y: number) {
+  var angle = ((x - 90) / 180) * Math.PI,
+    radius = y
+  return [radius * Math.cos(angle), radius * Math.sin(angle)]
+}
+
 function mapNode(d: any) {
   return {
     id: d.data.id,
     r: 2.5,
     text: d.data.data,
     style: {
-      transform: `translate(${d.y}px, ${d.x}px)`
+      transform: `translate(${project(d.x, d.y)})`
     },
     textpos: {
       x: 8,
