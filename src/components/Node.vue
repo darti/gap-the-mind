@@ -1,0 +1,28 @@
+<template>
+  <g
+    class="node"
+    v-bind:style="node.style"
+    v-bind:class="[node.className, { highlight: node.highlight }]"
+  >
+    <circle v-bind:r="node.r" />
+
+    <text
+      v-bind:dx="node.textpos.x"
+      v-bind:dy="node.textpos.y"
+      v-bind:style="node.textStyle"
+    >{{ node.text }}</text>
+  </g>
+</template>
+
+<script lang="ts">
+import { Component, Prop, Vue } from "vue-property-decorator"
+import { NodeModel } from "../models/mindmap"
+
+@Component
+export default class Node extends Vue {
+  @Prop() private node!: NodeModel
+}
+</script>
+
+<style>
+</style>

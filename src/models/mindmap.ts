@@ -3,7 +3,7 @@ export interface MindMapModel {
 }
 
 export interface NodeModel {
-  id: string
-  data: any
+  name: string
+  size?: number
   children?: NodeModel[]
 }
