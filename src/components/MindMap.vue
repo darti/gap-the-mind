@@ -1,21 +1,14 @@
 <template>
   <svg id="mindmap" :style="svgStyle" viewBox="-500 -500 1000 1000">
-    <!-- <transition-group tag="g" name="line">
-      <path
-        v-for="link in links"
-        class="link"
-        v-bind:key="link.id"
-        v-bind:d="link.d"
-        v-bind:style="link.style"
-      />
-    </transition-group>-->
+    <transition-group tag="g" name="line">
+      <Link v-for="(link, index) in links" :link="link" class="link" v-bind:key="index" />
+    </transition-group>
 
     <transition-group tag="g" name="nodes">
       <Node
         v-on:click="select(index, node)"
         v-for="(node, index) in nodes"
         v-bind:key="node.id"
-        v-bind:class="[node.className, { highlight: node.highlight }]"
         :node="node"
       />
     </transition-group>
@@ -26,12 +19,14 @@
 import { Component, Prop, Vue } from "vue-property-decorator"
 import { NodeModel } from "../models/mindmap"
 import Node from "./Node.vue"
+import Link from "./Link.vue"
 
 import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 
 @Component({
   components: {
-    Node
+    Node,
+    Link
   }
 })
 export default class MindMap extends Vue {

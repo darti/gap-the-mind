@@ -1,7 +1,7 @@
 <template>
   <g
     class="node"
-    v-bind:style="node.style"
+    v-bind="node.style"
     v-bind:class="[node.className, { highlight: node.highlight }]"
   >
     <circle v-bind:r="node.r" />
@@ -20,7 +20,7 @@ import { NodeModel } from "../models/mindmap"
 
 @Component
 export default class Node extends Vue {
-  @Prop() private node!: NodeModel
+  @Prop() private node!: any
 }
 </script>
 

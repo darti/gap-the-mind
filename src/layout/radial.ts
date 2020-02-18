@@ -31,17 +31,9 @@ function nodes(state: MindMapModel, getters: any) {
 function links(state: MindMapModel, getters: any) {
   if (getters.root)
     return getters.root
-      .descendants()
-      .slice(1)
+      .links()
+      .slice(0, 3)
       .map(mapLink)
-}
-
-function project(x: number, y: number) {
-  const angle = ((x - 90) / 180) * Math.PI
-  const radius = y
-
-  return `translate(${radius * Math.cos(angle)}px, ${radius *
-    Math.sin(angle)}px`
 }
 
 function mapNode(d: any) {
@@ -50,7 +42,7 @@ function mapNode(d: any) {
     r: 2.5,
     text: d.data.name,
     style: {
-      transform: project(d.x, d.y)
+      transform: `rotate(${d.x}) translate(${d.y},0)`
     },
     textpos: {
       x: 8,
@@ -62,15 +54,16 @@ function mapNode(d: any) {
   }
 }
 
-function mapLink(d: any) {
+function mapLink(l: any) {
   return {
-    id: d.data.id,
-    d: `M${d.y},${d.x}C${d.parent.y + 100},${d.x} ${d.parent.y + 100},${
-      d.parent.x
-    } ${d.parent.y},${d.parent.x}`,
+    id: l.target.data.name,
+    d: d3
+      .linkRadial()
+      .angle((d: any) => d.x)
+      .radius((d: any) => d.y)(l),
 
     style: {
-      stroke: "blue"
+      stroke: "grey"
     }
   }
 }
