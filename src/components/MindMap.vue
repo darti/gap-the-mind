@@ -8,7 +8,7 @@
       <Node
         v-on:click="select(index, node)"
         v-for="(node, index) in nodes"
-        v-bind:key="node.id"
+        v-bind:key="index"
         :node="node"
       />
     </transition-group>

@@ -20,7 +20,7 @@ function root(state: MindMapModel, getters: any) {
 function tree(state: MindMapModel) {
   return d3
     .tree()
-    .size([RADIUS, RADIUS])
+    .size([2 * Math.PI, RADIUS])
     .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth)
 }
 
@@ -29,11 +29,7 @@ function nodes(state: MindMapModel, getters: any) {
 }
 
 function links(state: MindMapModel, getters: any) {
-  if (getters.root)
-    return getters.root
-      .links()
-      .slice(0, 3)
-      .map(mapLink)
+  if (getters.root) return getters.root.links().map(mapLink)
 }
 
 function mapNode(d: any) {
@@ -42,7 +38,7 @@ function mapNode(d: any) {
     r: 2.5,
     text: d.data.name,
     style: {
-      transform: `rotate(${d.x}) translate(${d.y},0)`
+      transform: `rotate(${(d.x * 180) / Math.PI - 90}) translate(${d.y},0)`
     },
     textpos: {
       x: 8,
@@ -54,13 +50,13 @@ function mapNode(d: any) {
   }
 }
 
-function mapLink(l: any) {
+function mapLink(d: any) {
   return {
-    id: l.target.data.name,
+    id: d.target.data.name,
     d: d3
       .linkRadial()
-      .angle((d: any) => d.x)
-      .radius((d: any) => d.y)(l),
+      .angle((l: any) => l.x)
+      .radius((l: any) => l.y)(d),
 
     style: {
       stroke: "grey"
