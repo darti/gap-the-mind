@@ -20,7 +20,7 @@ function root(state: MindMapModel, getters: any) {
 function tree(state: MindMapModel) {
   return d3
     .tree()
-    .size([2 * Math.PI, RADIUS])
+    .size([Math.PI, RADIUS])
     .separation((a, b) => (a.parent == b.parent ? 1 : 2) / a.depth)
 }
 
@@ -32,20 +32,36 @@ function links(state: MindMapModel, getters: any) {
   if (getters.root) return getters.root.links().map(mapLink)
 }
 
+function spreadAngle(a: number) {
+  var sa = (a + 2 * Math.PI) % (2 * Math.PI)
+
+  sa = sa > Math.PI / 2 ? -sa : sa
+  sa += Math.PI / 4
+
+  return sa
+}
+
+function rad2deg(a: number) {
+  return a * (180 / Math.PI)
+}
+
 function mapNode(d: any) {
+  const angle = rad2deg(spreadAngle(d.x)) - 90
+
+  const isRight = angle > -45
+
   return {
     id: d.data.name,
     r: 2.5,
     text: d.data.name,
-    style: {
-      transform: `rotate(${(d.x * 180) / Math.PI - 90}) translate(${d.y},0)`
-    },
+    transform: `rotate(${angle}) translate(${d.y},0)`,
     textpos: {
-      x: 8,
+      x: isRight ? 8 : -8,
       y: 3
     },
     textStyle: {
-      textAnchor: "start"
+      textAnchor: isRight ? "start" : "end",
+      transform: `rotate(${-angle})`
     }
   }
 }
@@ -55,7 +71,7 @@ function mapLink(d: any) {
     id: d.target.data.name,
     d: d3
       .linkRadial()
-      .angle((l: any) => l.x)
+      .angle((l: any) => spreadAngle(l.x))
       .radius((l: any) => l.y)(d),
 
     style: {
