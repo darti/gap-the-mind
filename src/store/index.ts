@@ -4,7 +4,7 @@ import { MindMapModel } from "@/models/mindmap"
 
 import data from "./flare.json"
 
-import layout from "@/layout/radial"
+import layout from "@/layout/cartesian"
 
 Vue.use(Vuex)
 
