@@ -54,7 +54,7 @@ function mapLink(d: any) {
     id: d.target.data.name,
     d: d3
       .linkVertical()
-      .source(d => [d.source.x, d.source.y])
+      //.source(l => [d.source.x, d.source.y])
       .x((l: any) => l.x)
       .y((l: any) => l.y)(d),
     transform: "rotate(-90)",

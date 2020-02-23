@@ -1,23 +1,34 @@
 <template>
-  <svg id="mindmap" :style="svgStyle" viewBox="-500 -500 1000 1000">
-    <transition-group tag="g" name="line">
-      <Link v-for="(link, index) in links" :link="link" class="link" v-bind:key="index" />
-    </transition-group>
+  <SvgPanZoom
+    id="zoomable"
+    :zoomEnabled="true"
+    :controlIconsEnabled="true"
+    :fit="false"
+    :center="true"
+    minZoom="0.1"
+  >
+    <svg id="mindmap" :style="svgStyle" viewBox="-500 -500 1000 1000">
+      <transition-group tag="g" name="line">
+        <Link v-for="(link, index) in links" :link="link" class="link" v-bind:key="index" />
+      </transition-group>
 
-    <transition-group tag="g" name="nodes">
-      <Node
-        v-on:click="select(index, node)"
-        v-for="(node, index) in nodes"
-        v-bind:key="index"
-        :node="node"
-      />
-    </transition-group>
-  </svg>
+      <transition-group tag="g" name="nodes">
+        <Node
+          v-on:click="select(index, node)"
+          v-for="(node, index) in nodes"
+          v-bind:key="index"
+          :node="node"
+        />
+      </transition-group>
+    </svg>
+  </SvgPanZoom>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator"
 import { NodeModel } from "../models/mindmap"
+import SvgPanZoom from "vue-svg-pan-zoom"
+
 import Node from "./Node.vue"
 import Link from "./Link.vue"
 
@@ -26,7 +37,8 @@ import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 @Component({
   components: {
     Node,
-    Link
+    Link,
+    SvgPanZoom
   }
 })
 export default class MindMap extends Vue {
@@ -54,6 +66,11 @@ export default class MindMap extends Vue {
 }
 
 #mindmap {
+  width: 100%;
+  height: 100%;
+}
+
+#zoomable {
   width: 100%;
   height: 100%;
 }
