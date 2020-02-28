@@ -1,5 +1,4 @@
 import { MindMapModel } from "@/models/mindmap"
-import { GetterTree, Getter } from "vuex"
 import * as d3 from "d3"
 
 const RADIUS = 500
@@ -49,17 +48,18 @@ function mapNode(d: any) {
   }
 }
 
-function mapLink(d: any) {
+function mapLink(link: any) {
   return {
-    id: d.target.data.name,
+    id: link.target.data.name,
     d: d3
       .linkVertical()
-      //.source(l => [d.source.x, d.source.y])
+      .source(l => [l.source[0], l.source])
       .x((l: any) => l.x)
-      .y((l: any) => l.y)(d),
+      .y((l: any) => l.y)(link),
     transform: "rotate(-90)",
     style: {
       stroke: "grey"
-    }
+    },
+    source: link
   }
 }

@@ -9,14 +9,19 @@
   >
     <svg id="mindmap" :style="svgStyle" viewBox="-500 -500 1000 1000">
       <transition-group tag="g" name="line">
-        <Link v-for="(link, index) in links" :link="link" class="link" v-bind:key="index" />
+        <Link
+          v-for="link in links"
+          :link="link"
+          class="link"
+          v-bind:key="link.id"
+        />
       </transition-group>
 
       <transition-group tag="g" name="nodes">
         <Node
           v-on:click="select(index, node)"
           v-for="(node, index) in nodes"
-          v-bind:key="index"
+          v-bind:key="node.text"
           :node="node"
         />
       </transition-group>
