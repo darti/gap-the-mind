@@ -36,14 +36,14 @@ function mapNode(d: any) {
     id: d.data.name,
     r: 2.5,
     text: d.data.name,
-    transform: `rotate(-90) translate(${d.x},${d.y})`,
+    transform: `translate(${d.y},${d.x})`,
     textpos: {
       x: 8,
       y: 3
     },
     textStyle: {
       textAnchor: "start",
-      transform: `rotate(90)`
+      transform: ``
     }
   }
 }
@@ -52,11 +52,11 @@ function mapLink(link: any) {
   return {
     id: link.target.data.name,
     d: d3
-      .linkVertical()
-      .source(l => [l.source[0], l.source])
-      .x((l: any) => l.x)
-      .y((l: any) => l.y)(link),
-    transform: "rotate(-90)",
+      .linkHorizontal()
+      //.source(l => [l.source[0], l.source])
+      .x((l: any) => l.y)
+      .y((l: any) => l.x)(link),
+    transform: "",
     style: {
       stroke: "grey"
     },
