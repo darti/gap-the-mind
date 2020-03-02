@@ -13,7 +13,7 @@ const layout = {
 export default layout
 
 function root(state: MindMapModel, getters: any) {
-  return getters.tree(d3.hierarchy(state.rootNode))
+  return getters.tree(d3.hierarchy(d3.stratify()(Object.values(state.nodes))))
 }
 
 function tree(state: MindMapModel) {
@@ -33,9 +33,9 @@ function links(state: MindMapModel, getters: any) {
 
 function mapNode(d: any) {
   return {
-    id: d.data.name,
+    id: d.data.id,
     r: 2.5,
-    text: d.data.name,
+    text: d.data.data.content,
     transform: `translate(${d.y},${d.x})`,
     textpos: {
       x: 8,

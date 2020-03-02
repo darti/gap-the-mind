@@ -1,8 +1,6 @@
 import Vue from "vue"
 import Vuex from "vuex"
-import { MindMapModel } from "@/models/mindmap"
-
-import data from "./flare.json"
+import { MindMapModel, NodeModel } from "@/models/mindmap"
 
 import layout from "@/layout/cartesian"
 
@@ -10,9 +8,16 @@ Vue.use(Vuex)
 
 export default new Vuex.Store<MindMapModel>({
   state: {
-    rootNode: data
+    nodes: {
+      "0": {
+        id: "0",
+        content: "root"
+      }
+    }
   },
-  mutations: {},
+  mutations: {
+    addNode(state: MindMapModel, parent: NodeModel) {}
+  },
   actions: {},
   modules: {},
   getters: { ...layout }

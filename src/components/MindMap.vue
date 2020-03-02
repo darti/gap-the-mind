@@ -21,7 +21,7 @@
         <Node
           v-on:click="select(index, node)"
           v-for="(node, index) in nodes"
-          v-bind:key="node.text"
+          v-bind:key="node.id"
           :node="node"
         />
       </transition-group>
@@ -47,8 +47,6 @@ import { State, Getter, Action, Mutation, namespace } from "vuex-class"
   }
 })
 export default class MindMap extends Vue {
-  @State private rootNode!: NodeModel
-
   @Getter private nodes!: any
   @Getter private links!: any
 

@@ -1,9 +1,10 @@
 export interface MindMapModel {
-  rootNode: NodeModel
+  nodes: { [id: string]: NodeModel }
 }
 
 export interface NodeModel {
-  name: string
+  id: string
+  content: string
   size?: number
-  children?: NodeModel[]
+  parentId?: string
 }
