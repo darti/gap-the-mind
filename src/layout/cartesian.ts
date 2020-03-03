@@ -50,7 +50,7 @@ function mapNode(d: any) {
 
 function mapLink(link: any) {
   return {
-    id: link.target.data.name,
+    id: `${link.source.data.id}-${link.target.data.id}`,
     d: d3
       .linkHorizontal()
       //.source(l => [l.source[0], l.source])

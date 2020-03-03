@@ -12,6 +12,16 @@ export default new Vuex.Store<MindMapModel>({
       "0": {
         id: "0",
         content: "root"
+      },
+      "1": {
+        id: "1",
+        content: "Child 1",
+        parentId: "0"
+      },
+      "2": {
+        id: "2",
+        content: "Child 2",
+        parentId: "0"
       }
     }
   },
