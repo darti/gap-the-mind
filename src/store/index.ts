@@ -2,6 +2,8 @@ import Vue from "vue"
 import Vuex from "vuex"
 import { MindMapModel, NodeModel } from "@/models/mindmap"
 
+import { v4 as uuidv4 } from "uuid"
+
 import layout from "@/layout/cartesian"
 
 Vue.use(Vuex)
@@ -26,9 +28,24 @@ export default new Vuex.Store<MindMapModel>({
     }
   },
   mutations: {
-    addNode(state: MindMapModel, parent: NodeModel) {}
+    addNode(state: MindMapModel, parent: NodeModel) {
+      const id = uuidv4()
+
+      state.nodes = {
+        ...state.nodes,
+        [id]: {
+          id,
+          parentId: parent.id,
+          content: "Test"
+        }
+      }
+    }
   },
-  actions: {},
+  actions: {
+    addNode({ commit }, parent: NodeModel) {
+      commit("addNode", parent)
+    }
+  },
   modules: {},
   getters: { ...layout }
 })
