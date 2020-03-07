@@ -3,6 +3,10 @@ export interface MindMapModel {
   selectedNode: string
 }
 
+export interface LayoutModel {
+  transform: string
+}
+
 export interface NodeModel {
   id: string
   content: string

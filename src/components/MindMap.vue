@@ -55,6 +55,13 @@ export default class MindMap extends Vue {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="stylus">
+
+@namespace svg url(http://www.w3.org/2000/svg);
+
+svg|a:hover, svg|a:active {
+  outline: dotted 1px blue;
+}
+
 .node {
   fill: white;
 }

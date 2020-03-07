@@ -29,16 +29,23 @@ export default new Vuex.Store<MindMapModel>({
     }
   },
   mutations: {
-    addNode(state: MindMapModel, parent: NodeModel) {
+    addNode(
+      state: MindMapModel,
+      { parentId, focus }: { parentId: string; focus: boolean }
+    ) {
       const id = uuidv4()
 
       state.nodes = {
         ...state.nodes,
         [id]: {
           id,
-          parentId: parent.id,
+          parentId: parentId,
           content: "Test"
         }
+      }
+
+      if (focus) {
+        state.selectedNode = id
       }
     },
     selectNode(state: MindMapModel, id: string) {
@@ -46,8 +53,11 @@ export default new Vuex.Store<MindMapModel>({
     }
   },
   actions: {
-    addNode({ commit }, parent: NodeModel) {
-      commit("addNode", parent)
+    addChild({ commit }, parent: NodeModel, focus = true) {
+      commit("addNode", { parentId: parent.id, focus })
+    },
+    addSibling({ commit }, parent: NodeModel, focus = true) {
+      commit("addNode", { parentId: parent.parentId, focus })
     },
     selectNode({ state, commit }, id: string) {
       if (state.selectedNode != id) {

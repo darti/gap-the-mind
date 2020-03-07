@@ -33,18 +33,8 @@ function links(state: MindMapModel, getters: any) {
 
 function mapNode(d: any) {
   return {
-    id: d.data.id,
-    r: 2.5,
-    text: d.data.data.content,
-    transform: `translate(${d.y},${d.x})`,
-    textpos: {
-      x: 8,
-      y: 3
-    },
-    textStyle: {
-      textAnchor: "start",
-      transform: ``
-    }
+    ...d.data.data,
+    transform: `translate(${d.y},${d.x})`
   }
 }
 
