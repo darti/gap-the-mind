@@ -1,20 +1,20 @@
 <template>
-  <g
-    class="node"
-    v-bind:transform="node.transform"
-    v-bind:class="[node.className, { selected }]"
-    v-on:click="select"
-    v-on:keyup.enter="addChild"
-  >
-    <circle v-bind:r="node.r" />
-
-    <text
-      v-bind:dx="node.textpos.x"
-      v-bind:dy="node.textpos.y"
-      v-bind:style="node.textStyle"
-      v-bind:transform="node.textStyle.transform"
-    >{{ node.text }}</text>
-  </g>
+  <a v-bind:xlink:href="'#' + node.id" v-on:click="select" v-on:keyup.enter="addChild">
+    <g
+      ref="node"
+      class="node"
+      v-bind:transform="node.transform"
+      v-bind:class="[node.className, { selected }]"
+    >
+      <circle v-bind:r="node.r" />
+      <text
+        v-bind:dx="node.textpos.x"
+        v-bind:dy="node.textpos.y"
+        v-bind:style="node.textStyle"
+        v-bind:transform="node.textStyle.transform"
+      >{{ node.text }}</text>
+    </g>
+  </a>
 </template>
 
 <script lang="ts">
@@ -29,16 +29,20 @@ export default class Node extends Vue {
   @Action private selectNode!: any
   @State private selectedNode!: any
 
-  public addChild() {
+  private addChild() {
     this.$log.info("click")
     this.addNode(this.node)
   }
 
-  public select() {
+  private select() {
     this.selectNode(this.node.id)
   }
 
-  public get selected() {
+  private focus() {
+    // this.$refs.node.focus()
+  }
+
+  private get selected() {
     return this.node && this.node.id === this.selectedNode
   }
 }

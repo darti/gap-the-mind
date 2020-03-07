@@ -54,13 +54,14 @@ export default class MindMap extends Vue {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="stylus">
+<style lang="stylus">
 .node {
   fill: white;
 }
 
 .node.selected {
   fill: red;
+  color: blue;
 }
 
 .link {

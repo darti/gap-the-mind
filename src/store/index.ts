@@ -49,8 +49,10 @@ export default new Vuex.Store<MindMapModel>({
     addNode({ commit }, parent: NodeModel) {
       commit("addNode", parent)
     },
-    selectNode({ commit }, id: string) {
-      commit("selectNode", id)
+    selectNode({ state, commit }, id: string) {
+      if (state.selectedNode != id) {
+        commit("selectNode", id)
+      }
     }
   },
   modules: {},
