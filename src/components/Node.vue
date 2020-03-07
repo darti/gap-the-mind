@@ -4,6 +4,7 @@
     v-bind:transform="node.transform"
     v-bind:class="[node.className, { selected }]"
     v-on:click="select"
+    v-on:keyup.enter="addChild"
   >
     <circle v-bind:r="node.r" />
 
@@ -28,7 +29,7 @@ export default class Node extends Vue {
   @Action private selectNode!: any
   @State private selectedNode!: any
 
-  public add() {
+  public addChild() {
     this.$log.info("click")
     this.addNode(this.node)
   }

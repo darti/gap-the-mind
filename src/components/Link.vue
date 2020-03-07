@@ -1,10 +1,5 @@
 <template>
-  <path
-    class="link"
-    v-bind:d="link.d"
-    v-bind:style="link.style"
-    v-bind:transform="link.transform"
-  />
+  <path class="link" v-bind:d="link.d" v-bind:style="link.style" v-bind:transform="link.transform" />
 </template>
 
 <script lang="ts">
@@ -13,10 +8,6 @@ import { Component, Prop, Vue } from "vue-property-decorator"
 @Component
 export default class Link extends Vue {
   @Prop() private link!: any
-
-  created() {
-    this.$log.info(this.link)
-  }
 }
 </script>
 
