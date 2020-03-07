@@ -9,12 +9,7 @@
   >
     <svg id="mindmap" :style="svgStyle" viewBox="-500 -500 1000 1000">
       <transition-group tag="g" name="line">
-        <Link
-          v-for="link in links"
-          :link="link"
-          class="link"
-          v-bind:key="link.id"
-        />
+        <Link v-for="link in links" :link="link" class="link" v-bind:key="link.id" />
       </transition-group>
 
       <transition-group tag="g" name="nodes">
@@ -62,6 +57,10 @@ export default class MindMap extends Vue {
 <style scoped lang="stylus">
 .node {
   fill: white;
+}
+
+.node.selected {
+  fill: red;
 }
 
 .link {

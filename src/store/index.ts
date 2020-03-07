@@ -10,6 +10,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store<MindMapModel>({
   state: {
+    selectedNode: "1",
     nodes: {
       "0": {
         id: "0",
@@ -39,11 +40,17 @@ export default new Vuex.Store<MindMapModel>({
           content: "Test"
         }
       }
+    },
+    selectNode(state: MindMapModel, id: string) {
+      state.selectedNode = id
     }
   },
   actions: {
     addNode({ commit }, parent: NodeModel) {
       commit("addNode", parent)
+    },
+    selectNode({ commit }, id: string) {
+      commit("selectNode", id)
     }
   },
   modules: {},
