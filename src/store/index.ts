@@ -59,9 +59,14 @@ export default new Vuex.Store<MindMapModel>({
     addSibling({ commit }, parent: NodeModel, focus = true) {
       commit("addNode", { parentId: parent.parentId, focus })
     },
-    selectNode({ state, commit }, id: string) {
-      if (state.selectedNode != id) {
-        commit("selectNode", id)
+    selectNode({ state, commit }, node: NodeModel) {
+      if (state.selectedNode != node.id) {
+        commit("selectNode", node.id)
+      }
+    },
+    selectParent({ state, commit }, node: NodeModel) {
+      if (node.parentId) {
+        commit("selectNode", node.parentId)
       }
     }
   },

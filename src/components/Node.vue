@@ -15,9 +15,12 @@ import { Action, State } from "vuex-class"
 @Component
 export default class Node extends Vue {
   @Prop() private node!: NodeModel & LayoutModel
+
   @Action private addChild!: any
   @Action private addSibling!: any
   @Action private selectNode!: any
+  @Action private selectParent!: any
+
   @State private selectedNode!: any
 
   private textpos = {
@@ -26,8 +29,7 @@ export default class Node extends Vue {
   }
 
   private textStyle = {
-    textAnchor: "start",
-    transform: ``
+    textAnchor: "start"
   }
 
   private r = 2.5
@@ -44,16 +46,18 @@ export default class Node extends Vue {
     if (this.selected) {
       this.$log.info(e)
 
-      if (e.keyCode === 13 && e.shiftKey) {
+      if (e.code === "Enter" && e.shiftKey) {
         this.addChild(this.node)
-      } else if (e.keyCode === 13) {
+      } else if (e.code === "Enter") {
         this.addSibling(this.node)
+      } else if (e.code === "ArrowLeft") {
+        this.selectParent(this.node)
       }
     }
   }
 
   private select() {
-    this.selectNode(this.node.id)
+    this.selectNode(this.node)
   }
 
   private get selected() {
