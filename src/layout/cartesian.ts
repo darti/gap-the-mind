@@ -20,7 +20,7 @@ function tree(state: MindMapModel) {
   return d3
     .tree()
     .separation((a, b) => (a.parent == b.parent ? 10 : 20) / a.depth)
-    .nodeSize([5, 200])
+    .nodeSize([5, 100])
 }
 
 function nodes(state: MindMapModel, getters: any) {
