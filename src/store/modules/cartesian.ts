@@ -34,6 +34,7 @@ function links(state: MindMapModel, getters: any) {
 function mapNode(d: any) {
   return {
     ...d.data.data,
+    source: d,
     transform: `translate(${d.y},${d.x})`
   }
 }

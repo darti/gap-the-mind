@@ -1,9 +1,16 @@
 export interface MindMapModel {
-  nodes: { [id: string]: NodeModel }
-  selectedNode: string
+  nodes: NodeModel[]
+}
+
+export interface NavigationModel {
+  selectedNodeId: string
 }
 
 export interface LayoutModel {
+  nodeSize: [number, number]
+}
+
+export interface NodeLayoutModel {
   transform: string
 }
 
