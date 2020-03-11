@@ -2,7 +2,6 @@ import Vue from "vue"
 import Vuex, { Store } from "vuex"
 import { MindMapModel, NodeModel } from "@/models/mindmap"
 
-import layout from "@/store/modules/cartesian"
 import { initializeStores, modules } from "./store-accessor"
 
 Vue.use(Vuex)

@@ -1,7 +1,7 @@
 import { NodeModel } from "@/models/mindmap"
 import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators"
 
-@Module
+@Module({ name: "navigation" })
 export default class NavigationModule extends VuexModule {
   selectedNodeId = "O"
 
