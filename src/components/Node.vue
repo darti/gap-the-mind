@@ -11,17 +11,11 @@
 import { Component, Prop, Vue } from "vue-property-decorator"
 import { NodeModel, LayoutModel } from "../models/mindmap"
 import { Action, State } from "vuex-class"
+import { navigationModule, nodeModule } from "../store"
 
 @Component
 export default class Node extends Vue {
   @Prop() private node!: NodeModel & LayoutModel
-
-  @Action private addChild!: any
-  @Action private addSibling!: any
-  @Action private selectNode!: any
-  @Action private selectParent!: any
-
-  @State private selectedNode!: any
 
   private textpos = {
     x: 8,
@@ -33,6 +27,14 @@ export default class Node extends Vue {
   }
 
   private r = 2.5
+
+  private select() {
+    navigationModule.selectNode(this.node)
+  }
+
+  private get selected() {
+    return this.node && this.node.id === navigationModule.selectedNodeId
+  }
 
   private created() {
     window.addEventListener("keyup", this.processKeyboardEvent)
@@ -47,21 +49,14 @@ export default class Node extends Vue {
       this.$log.info(e)
 
       if (e.code === "Enter" && e.shiftKey) {
-        this.addChild(this.node)
+        this.$log.info(this.node)
+        nodeModule.addChild(this.node)
       } else if (e.code === "Enter") {
-        this.addSibling(this.node)
+        nodeModule.addSibling(this.node)
       } else if (e.code === "ArrowLeft") {
-        this.selectParent(this.node)
+        navigationModule.selectParent(this.node)
       }
     }
-  }
-
-  private select() {
-    this.selectNode(this.node)
-  }
-
-  private get selected() {
-    return this.node && this.node.id === this.selectedNode
   }
 }
 </script>

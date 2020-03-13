@@ -34,6 +34,9 @@ import Link from "./Link.vue"
 
 import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 
+import { navigationModule, nodeModule } from "../store"
+
+
 @Component({
   components: {
     Node,
@@ -47,9 +50,8 @@ export default class MindMap extends Vue {
 
   private svgStyle = {}
 
-  private select(index: number, node: NodeModel) {
-    console.log(node)
-  }
+  
+
 }
 </script>
 
