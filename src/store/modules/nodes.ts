@@ -1,4 +1,4 @@
-import { NodeId } from "../../models/mindmap"
+import { NodeId, NodeModel } from "../../models/mindmap"
 
 import { v4 as uuidv4 } from "uuid"
 
@@ -11,8 +11,10 @@ import {
 } from "vuex-module-decorators"
 
 import store from "@/store"
+import navigation from "./navigation"
 
 interface AddNodePayload {
+  id: NodeId
   beforeId?: NodeId
   parentId: NodeId
   focus?: boolean
@@ -43,9 +45,7 @@ class NodeModule extends VuexModule {
   ]
 
   @Mutation
-  addNode({ parentId, beforeId }: AddNodePayload) {
-    const id = uuidv4()
-
+  addNode({ id, parentId, beforeId }: AddNodePayload) {
     const beforeIndex = this.nodes.findIndex(n => n.id === beforeId)
 
     const newNode = {
@@ -57,14 +57,26 @@ class NodeModule extends VuexModule {
     this.nodes.splice(beforeIndex + 1, 0, newNode)
   }
 
-  @Action({ commit: "addNode" })
-  addChild(parentId: string, focus = true) {
-    this.addNode({ parentId })
+  @Action
+  addChild(node: NodeModel) {
+    const id = uuidv4()
+
+    if (node.parentId) {
+      const newId = this.addNode({ id, parentId: node.id })
+
+      navigation.selectNode(id)
+    }
   }
 
-  @Action({ commit: "addNode" })
-  addSibling(payload: AddNodePayload) {
-    return payload
+  @Action
+  addSibling(node: NodeModel) {
+    const id = uuidv4()
+
+    if (node.parentId) {
+      this.addNode({ id, beforeId: node.id, parentId: node.parentId })
+
+      navigation.selectNode(id)
+    }
   }
 }
 

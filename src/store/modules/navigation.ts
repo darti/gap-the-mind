@@ -19,16 +19,9 @@ class NavigationModule extends VuexModule {
   }
 
   @Action
-  async selectNode(node: NodeModel) {
-    if (this.selectedNodeId != node.id) {
-      this.setSelectNode(node.id)
-    }
-  }
-
-  @Action
-  async selectParent(node: NodeModel) {
-    if (node.parentId) {
-      this.setSelectNode(node.parentId)
+  async selectNode(id: NodeId) {
+    if (this.selectedNodeId != id) {
+      this.setSelectNode(id)
     }
   }
 }

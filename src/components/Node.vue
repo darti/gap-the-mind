@@ -31,7 +31,7 @@ export default class Node extends Vue {
   private r = 2.5
 
   private select() {
-    navigation.selectNode(this.node)
+    navigation.selectNode(this.node.id)
   }
 
   private get selected() {
@@ -51,17 +51,11 @@ export default class Node extends Vue {
       this.$log.info(this.node)
 
       if (e.code === "Tab") {
-        nodes.addChild(this.node.id)
+        nodes.addChild(this.node)
       } else if (e.code === "Enter") {
         if (this.node.parentId) {
-          nodes.addSibling({
-            beforeId: this.node.id,
-            parentId: this.node.parentId,
-            focus: true
-          })
+          nodes.addSibling(this.node)
         }
-      } else if (e.code === "ArrowLeft") {
-        navigation.selectParent(this.node)
       }
     }
   }
