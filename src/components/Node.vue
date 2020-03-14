@@ -46,13 +46,17 @@ export default class Node extends Vue {
 
   private processKeyboardEvent(e: KeyboardEvent) {
     if (this.selected) {
-      this.$log.info(e)
+      this.$log.info(this.node)
 
-      if (e.code === "Enter" && e.shiftKey) {
-        this.$log.info(this.node)
-        nodeModule.addChild(this.node)
+      if (e.code === "Tab") {
+        nodeModule.addChild(this.node.id)
       } else if (e.code === "Enter") {
-        nodeModule.addSibling(this.node)
+        if (this.node.parentId) {
+          nodeModule.addSibling({
+            beforeId: this.node.id,
+            parentId: this.node.parentId
+          })
+        }
       } else if (e.code === "ArrowLeft") {
         navigationModule.selectParent(this.node)
       }
