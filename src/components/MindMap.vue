@@ -35,6 +35,8 @@ import Link from "./Link.vue"
 import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 
 import layout from '@/store/modules/layout'
+import navigation from '../store/modules/navigation'
+import nodes from '@/store/modules/nodes'
 
 @Component({
   components: {
@@ -51,6 +53,25 @@ export default class MindMap extends Vue {
   public get links() {
     return layout.links
   }
+
+   private created() {
+    window.addEventListener("keyup", this.processKeyboardEvent)
+  }
+
+  private destroyed() {
+    window.removeEventListener("keyup", this.processKeyboardEvent)
+  }
+
+  private processKeyboardEvent(e: KeyboardEvent) {
+    if (navigation.selectedNodeId) {
+      if (e.code === "Enter" && e.shiftKey) {
+        nodes.addChild(navigation.selectedNodeId)
+      } else if (e.code === "Enter") {
+          nodes.addSibling(navigation.selectedNodeId)
+      }
+    }
+  }
+
 
   private svgStyle = {}
 

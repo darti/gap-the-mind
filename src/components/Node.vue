@@ -37,28 +37,6 @@ export default class Node extends Vue {
   private get selected() {
     return this.node && this.node.id === navigation.selectedNodeId
   }
-
-  private created() {
-    window.addEventListener("keyup", this.processKeyboardEvent)
-  }
-
-  private destroyed() {
-    window.removeEventListener("keyup", this.processKeyboardEvent)
-  }
-
-  private processKeyboardEvent(e: KeyboardEvent) {
-    if (this.selected) {
-      this.$log.info(this.node)
-
-      if (e.code === "Tab") {
-        nodes.addChild(this.node)
-      } else if (e.code === "Enter") {
-        if (this.node.parentId) {
-          nodes.addSibling(this.node)
-        }
-      }
-    }
-  }
 }
 </script>
 

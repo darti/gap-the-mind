@@ -46,7 +46,9 @@ class NodeModule extends VuexModule {
 
   @Mutation
   addNode({ id, parentId, beforeId }: AddNodePayload) {
-    const beforeIndex = this.nodes.findIndex(n => n.id === beforeId)
+    const beforeIndex = beforeId
+      ? this.nodes.findIndex(n => n.id === beforeId)
+      : -1
 
     const newNode = {
       id,
@@ -58,22 +60,20 @@ class NodeModule extends VuexModule {
   }
 
   @Action
-  addChild(node: NodeModel) {
+  addChild(parentId: NodeId) {
     const id = uuidv4()
+    this.addNode({ id, parentId: parentId })
 
-    if (node.parentId) {
-      const newId = this.addNode({ id, parentId: node.id })
-
-      navigation.selectNode(id)
-    }
+    navigation.selectNode(id)
   }
 
   @Action
-  addSibling(node: NodeModel) {
-    const id = uuidv4()
+  addSibling(sibblingId: NodeId) {
+    const sibbling = this.nodes.find(n => n.id === sibblingId)
 
-    if (node.parentId) {
-      this.addNode({ id, beforeId: node.id, parentId: node.parentId })
+    if (sibbling && sibbling.parentId) {
+      const id = uuidv4()
+      this.addNode({ id, beforeId: sibblingId, parentId: sibbling.parentId })
 
       navigation.selectNode(id)
     }
