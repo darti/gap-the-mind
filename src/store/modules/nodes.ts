@@ -1,8 +1,16 @@
-import { MindMapModel, NodeModel, NodeId } from "../../models/mindmap"
+import { NodeId } from "../../models/mindmap"
 
 import { v4 as uuidv4 } from "uuid"
 
-import { Module, VuexModule, Mutation, Action } from "vuex-module-decorators"
+import {
+  Module,
+  VuexModule,
+  Mutation,
+  Action,
+  getModule
+} from "vuex-module-decorators"
+
+import store from "@/store"
 
 interface AddNodePayload {
   beforeId?: NodeId
@@ -10,8 +18,8 @@ interface AddNodePayload {
   focus?: boolean
 }
 
-@Module({ name: "nodes" })
-export default class NodeModule extends VuexModule {
+@Module({ dynamic: true, store, name: "nodes" })
+class NodeModule extends VuexModule {
   nodes = [
     {
       id: "0",
@@ -51,7 +59,7 @@ export default class NodeModule extends VuexModule {
 
   @Action({ commit: "addNode" })
   addChild(parentId: string, focus = true) {
-    return { parentId }
+    this.addNode({ parentId })
   }
 
   @Action({ commit: "addNode" })
@@ -59,3 +67,5 @@ export default class NodeModule extends VuexModule {
     return payload
   }
 }
+
+export default getModule(NodeModule)

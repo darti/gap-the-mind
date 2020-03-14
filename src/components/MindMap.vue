@@ -34,8 +34,7 @@ import Link from "./Link.vue"
 
 import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 
-import { navigationModule, nodeModule } from "../store"
-
+import layout from '@/store/modules/layout'
 
 @Component({
   components: {
@@ -45,8 +44,13 @@ import { navigationModule, nodeModule } from "../store"
   }
 })
 export default class MindMap extends Vue {
-  @Getter private nodes!: any
-  @Getter private links!: any
+  public get nodes() {
+    return layout.nodes
+  }
+
+  public get links() {
+    return layout.links
+  }
 
   private svgStyle = {}
 

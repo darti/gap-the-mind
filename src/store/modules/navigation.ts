@@ -1,26 +1,36 @@
-import { NodeModel } from "@/models/mindmap"
-import { VuexModule, Module, Mutation, Action } from "vuex-module-decorators"
+import { NodeModel, NodeId } from "@/models/mindmap"
+import {
+  VuexModule,
+  Module,
+  Mutation,
+  Action,
+  getModule
+} from "vuex-module-decorators"
 
-@Module({ name: "navigation" })
-export default class NavigationModule extends VuexModule {
+import store from "@/store"
+
+@Module({ name: "navigation", dynamic: true, store })
+class NavigationModule extends VuexModule {
   selectedNodeId = "O"
 
   @Mutation
-  setSelectNode(id: string) {
+  setSelectNode(id: NodeId) {
     this.selectedNodeId = id
   }
 
   @Action
   async selectNode(node: NodeModel) {
     if (this.selectedNodeId != node.id) {
-      this.context.commit("setSelectNode", node.id)
+      this.setSelectNode(node.id)
     }
   }
 
   @Action
   async selectParent(node: NodeModel) {
     if (node.parentId) {
-      this.context.commit("setSelectNode", node.parentId)
+      this.setSelectNode(node.parentId)
     }
   }
 }
+
+export default getModule(NavigationModule)

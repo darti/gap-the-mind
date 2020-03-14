@@ -1,6 +1,8 @@
 import * as d3 from "d3"
 import { GetterTree } from "vuex"
 
+import store from "@/store"
+
 import { NodeModel } from "@/models/mindmap"
 import {
   VuexModule,
@@ -9,11 +11,11 @@ import {
   Action,
   getModule
 } from "vuex-module-decorators"
-import NodeModule from "./node"
-import { nodeModule } from "../store-accessor"
 
-@Module({ name: "layout" })
-export default class LayoutModule extends VuexModule {
+import nodes from "./nodes"
+
+@Module({ dynamic: true, store, name: "layout" })
+class LayoutModule extends VuexModule {
   nodeSize: [number, number] = [5, 100]
 
   get tree() {
@@ -24,7 +26,7 @@ export default class LayoutModule extends VuexModule {
   }
 
   get root() {
-    return this.tree(d3.hierarchy(d3.stratify()(nodeModule.nodes)))
+    return this.tree(d3.hierarchy(d3.stratify()(nodes.nodes)))
   }
 
   get nodes() {
@@ -51,3 +53,5 @@ export default class LayoutModule extends VuexModule {
     }))
   }
 }
+
+export default getModule(LayoutModule)

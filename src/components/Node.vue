@@ -11,7 +11,9 @@
 import { Component, Prop, Vue } from "vue-property-decorator"
 import { NodeModel, LayoutModel } from "../models/mindmap"
 import { Action, State } from "vuex-class"
-import { navigationModule, nodeModule } from "../store"
+
+import navigation from "@/store/modules/navigation"
+import nodes from "@/store/modules/nodes"
 
 @Component
 export default class Node extends Vue {
@@ -29,11 +31,11 @@ export default class Node extends Vue {
   private r = 2.5
 
   private select() {
-    navigationModule.selectNode(this.node)
+    navigation.selectNode(this.node)
   }
 
   private get selected() {
-    return this.node && this.node.id === navigationModule.selectedNodeId
+    return this.node && this.node.id === navigation.selectedNodeId
   }
 
   private created() {
@@ -49,16 +51,17 @@ export default class Node extends Vue {
       this.$log.info(this.node)
 
       if (e.code === "Tab") {
-        nodeModule.addChild(this.node.id)
+        nodes.addChild(this.node.id)
       } else if (e.code === "Enter") {
         if (this.node.parentId) {
-          nodeModule.addSibling({
+          nodes.addSibling({
             beforeId: this.node.id,
-            parentId: this.node.parentId
+            parentId: this.node.parentId,
+            focus: true
           })
         }
       } else if (e.code === "ArrowLeft") {
-        navigationModule.selectParent(this.node)
+        navigation.selectParent(this.node)
       }
     }
   }
