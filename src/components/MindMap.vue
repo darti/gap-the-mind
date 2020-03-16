@@ -9,7 +9,12 @@
   >
     <svg id="mindmap" :style="svgStyle" viewBox="-500 -500 1000 1000">
       <transition-group tag="g" name="line">
-        <Link v-for="link in links" :link="link" class="link" v-bind:key="link.id" />
+        <Link
+          v-for="link in links"
+          :link="link"
+          class="link"
+          v-bind:key="link.id"
+        />
       </transition-group>
 
       <transition-group tag="g" name="nodes">
@@ -34,9 +39,9 @@ import Link from "./Link.vue"
 
 import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 
-import layout from '@/store/modules/layout'
-import navigation from '../store/modules/navigation'
-import nodes from '@/store/modules/nodes'
+import layout from "@/store/modules/layout"
+import navigation from "../store/modules/navigation"
+import nodes from "@/store/modules/nodes"
 
 @Component({
   components: {
@@ -54,7 +59,7 @@ export default class MindMap extends Vue {
     return layout.links
   }
 
-   private created() {
+  private created() {
     window.addEventListener("keyup", this.processKeyboardEvent)
   }
 
@@ -67,16 +72,12 @@ export default class MindMap extends Vue {
       if (e.code === "Enter" && e.shiftKey) {
         nodes.addChild(navigation.selectedNodeId)
       } else if (e.code === "Enter") {
-          nodes.addSibling(navigation.selectedNodeId)
+        nodes.addSibling(navigation.selectedNodeId)
       }
     }
   }
 
-
   private svgStyle = {}
-
-  
-
 }
 </script>
 
@@ -84,10 +85,6 @@ export default class MindMap extends Vue {
 <style lang="stylus">
 
 @namespace svg url(http://www.w3.org/2000/svg);
-
-svg|a:hover, svg|a:active {
-  outline: dotted 1px blue;
-}
 
 .node {
   fill: white;

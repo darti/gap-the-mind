@@ -1,27 +1,47 @@
 <template>
   <a v-bind:xlink:href="'#' + node.id" v-on:click="select">
-    <g ref="node" class="node" v-bind:transform="node.transform" v-bind:class="[{ selected }]">
+    <g
+      ref="node"
+      class="node"
+      v-bind:transform="node.transform"
+      v-bind:class="[{ selected }]"
+    >
       <circle v-bind:r="r" />
-      <text v-bind:dx="textpos.x" v-bind:dy="textpos.y" v-bind:style="textStyle">{{ node.content }}</text>
+      <foreignObject
+        height="100%"
+        width="100%"
+        v-bind:x="textpos.x"
+        v-bind:y="textpos.y"
+      >
+        <editor-content :editor="editor"
+      /></foreignObject>
     </g>
   </a>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator"
+import { Component, Prop, Vue, Watch } from "vue-property-decorator"
 import { NodeModel, LayoutModel } from "../models/mindmap"
 import { Action, State } from "vuex-class"
 
 import navigation from "@/store/modules/navigation"
 import nodes from "@/store/modules/nodes"
 
-@Component
+import { Editor, EditorContent } from "tiptap"
+
+@Component({
+  components: {
+    EditorContent
+  }
+})
 export default class Node extends Vue {
   @Prop() private node!: NodeModel & LayoutModel
 
+  private editor = new Editor()
+
   private textpos = {
     x: 8,
-    y: 3
+    y: -8
   }
 
   private textStyle = {
@@ -30,12 +50,24 @@ export default class Node extends Vue {
 
   private r = 2.5
 
+  @Watch("node", { immediate: true })
+  private onNodeChanged(
+    newNode: NodeModel & LayoutModel,
+    oldNode: NodeModel & LayoutModel
+  ) {
+    this.editor.setContent(newNode.content)
+  }
+
   private select() {
     navigation.selectNode(this.node.id)
   }
 
   private get selected() {
     return this.node && this.node.id === navigation.selectedNodeId
+  }
+
+  beforeDestroy() {
+    this.editor.destroy()
   }
 }
 </script>
