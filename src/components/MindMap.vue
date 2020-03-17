@@ -90,8 +90,13 @@ export default class MindMap extends Vue {
   fill: white;
 }
 
+.ProseMirror-focused {
+  outline-style : none
+  
+}
+
 .node.selected {
- 
+
 }
 
 .link {

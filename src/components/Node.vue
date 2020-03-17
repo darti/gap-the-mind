@@ -38,7 +38,9 @@ export default class Node extends Vue {
     textAnchor: "start"
   }
 
-  private r = 2.5
+  private get r() {
+    return this.selected ? 5 : 2.5
+  }
 
   @Watch("node", { immediate: true })
   private onNodeChanged(
@@ -60,6 +62,10 @@ export default class Node extends Vue {
 
   beforeDestroy() {
     this.editor.destroy()
+  }
+
+  private created() {
+    this.editor.on("focus", e => this.select())
   }
 }
 </script>
