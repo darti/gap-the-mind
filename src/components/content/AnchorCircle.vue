@@ -3,11 +3,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator"
+import { Component, Prop, Vue } from "vue-property-decorator"
 import { NodeLayoutModel } from "@/models/mindmap"
 
 @Component({})
-export default class Node extends Vue {
+export default class CircleAnchor extends Vue {
   @Prop() private node!: NodeLayoutModel
   @Prop() private selected!: boolean
 

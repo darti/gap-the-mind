@@ -24,7 +24,11 @@
           :node="node"
         >
         <template #anchor="{node, selected}">
-          <AnchorCircle :node="node" :selected="selected"/>
+          <slot name="anchor" v-bind:node="node" v-bind:selected="selected" ></slot>
+        </template>
+
+        <template #content="{node, selected, focus}">
+          <slot name="content" v-bind:node="node" v-bind:selected="selected" v-bind:focus="focus"></slot>
         </template>
         </Node>
       </transition-group>
@@ -40,8 +44,6 @@ import SvgPanZoom from "vue-svg-pan-zoom"
 import Node from "./Node.vue"
 import Link from "./Link.vue"
 
-import AnchorCircle from "./content/AnchorCircle.vue"
-
 import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 
 import layout from "@/store/modules/layout"
@@ -52,8 +54,7 @@ import nodes from "@/store/modules/nodes"
   components: {
     Node,
     Link,
-    SvgPanZoom,
-    AnchorCircle
+    SvgPanZoom
   }
 })
 export default class MindMap extends Vue {
@@ -94,11 +95,6 @@ export default class MindMap extends Vue {
 
 .node {
   fill: white;
-}
-
-.ProseMirror-focused {
-  outline-style : none
-  
 }
 
 .node.selected {
