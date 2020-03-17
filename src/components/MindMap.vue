@@ -91,8 +91,7 @@ export default class MindMap extends Vue {
 }
 
 .node.selected {
-  fill: red;
-  color: blue;
+ 
 }
 
 .link {

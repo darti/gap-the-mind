@@ -1,20 +1,10 @@
 <template>
-  <a v-bind:xlink:href="'#' + node.id" v-on:click="select">
-    <g
-      ref="node"
-      class="node"
-      v-bind:transform="node.transform"
-      v-bind:class="[{ selected }]"
-    >
+  <a v-bind:xlink:href="'#' + node.id" v-on:click="select" tabindex="-1">
+    <g ref="node" class="node" v-bind:transform="node.transform" v-bind:class="[{ selected }]">
       <circle v-bind:r="r" />
-      <foreignObject
-        height="100%"
-        width="100%"
-        v-bind:x="textpos.x"
-        v-bind:y="textpos.y"
-      >
-        <editor-content :editor="editor"
-      /></foreignObject>
+      <foreignObject height="50" width="100" v-bind:x="textpos.x" v-bind:y="textpos.y">
+        <editor-content :editor="editor" />
+      </foreignObject>
     </g>
   </a>
 </template>
@@ -60,6 +50,8 @@ export default class Node extends Vue {
 
   private select() {
     navigation.selectNode(this.node.id)
+
+    this.editor.focus()
   }
 
   private get selected() {
