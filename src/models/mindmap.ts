@@ -10,9 +10,6 @@ export interface NavigationModel {
 
 export interface LayoutModel {
   nodeSize: [number, number]
-}
-
-export interface NodeLayoutModel {
   transform: string
 }
 
@@ -22,3 +19,5 @@ export interface NodeModel {
   size?: number
   parentId?: NodeId
 }
+
+export type NodeLayoutModel = NodeModel & LayoutModel

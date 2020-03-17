@@ -19,11 +19,14 @@
 
       <transition-group tag="g" name="nodes">
         <Node
-          v-on:click="select(index, node)"
-          v-for="(node, index) in nodes"
+          v-for="node in nodes"
           v-bind:key="node.id"
           :node="node"
-        />
+        >
+        <template #anchor="{node, selected}">
+          <AnchorCircle :node="node" :selected="selected"/>
+        </template>
+        </Node>
       </transition-group>
     </svg>
   </SvgPanZoom>
@@ -37,6 +40,8 @@ import SvgPanZoom from "vue-svg-pan-zoom"
 import Node from "./Node.vue"
 import Link from "./Link.vue"
 
+import AnchorCircle from "./content/AnchorCircle.vue"
+
 import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 
 import layout from "@/store/modules/layout"
@@ -47,7 +52,8 @@ import nodes from "@/store/modules/nodes"
   components: {
     Node,
     Link,
-    SvgPanZoom
+    SvgPanZoom,
+    AnchorCircle
   }
 })
 export default class MindMap extends Vue {

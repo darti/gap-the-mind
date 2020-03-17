@@ -1,7 +1,7 @@
 <template>
   <a v-bind:xlink:href="'#' + node.id" v-on:click="select" tabindex="-1">
     <g ref="node" class="node" v-bind:transform="node.transform" v-bind:class="[{ selected }]">
-      <circle v-bind:r="r" />
+      <slot name="anchor" v-bind:node="node" v-bind:selected="selected"></slot>
       <foreignObject height="50" width="100" v-bind:x="textpos.x" v-bind:y="textpos.y">
         <editor-content :editor="editor" />
       </foreignObject>
@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator"
-import { NodeModel, LayoutModel } from "../models/mindmap"
+import { NodeModel, LayoutModel, NodeLayoutModel } from "../models/mindmap"
 import { Action, State } from "vuex-class"
 
 import navigation from "@/store/modules/navigation"
@@ -25,7 +25,7 @@ import { Editor, EditorContent } from "tiptap"
   }
 })
 export default class Node extends Vue {
-  @Prop() private node!: NodeModel & LayoutModel
+  @Prop() private node!: NodeLayoutModel
 
   private editor = new Editor()
 
