@@ -52,4 +52,8 @@ export default class TiptapContent extends Vue {
 .ProseMirror-focused {
   outline-style: none;
 }
+
+.ProseMirror {
+  color: white;
+}
 </style>
