@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <MindMap>
+      <template #link="{link}">
+        <LinkPath :link="link" />
+      </template>
       <template #anchor="{node, selected}">
         <AnchorCircle :node="node" :selected="selected" />
       </template>
@@ -14,15 +17,17 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
 import MindMap from "./components/MindMap.vue"
-import ContentTiptap from "./components/content/ContentTiptap.vue"
 
+import ContentTiptap from "./components/content/ContentTiptap.vue"
 import AnchorCircle from "./components/content/AnchorCircle.vue"
+import LinkPath from "./components/content/LinkPath.vue"
 
 @Component({
   components: {
     MindMap,
     AnchorCircle,
-    ContentTiptap
+    ContentTiptap,
+    LinkPath
   }
 })
 export default class App extends Vue {}

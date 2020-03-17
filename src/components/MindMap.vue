@@ -14,7 +14,11 @@
           :link="link"
           class="link"
           v-bind:key="link.id"
-        />
+        >
+          <template #link="{link}">
+            <slot name="link" v-bind:link="link"></slot>
+          </template>
+        </Link>
       </transition-group>
 
       <transition-group tag="g" name="nodes">

@@ -21,3 +21,5 @@ export interface NodeModel {
 }
 
 export type NodeLayoutModel = NodeModel & LayoutModel
+
+export interface LinkModel {}
