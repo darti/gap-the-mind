@@ -22,18 +22,24 @@
       </transition-group>
 
       <transition-group tag="g" name="nodes">
-        <Node
-          v-for="node in nodes"
-          v-bind:key="node.id"
-          :node="node"
-        >
-        <template #anchor="{node, selected}">
-          <slot name="anchor" v-bind:node="node" v-bind:selected="selected" ></slot>
-        </template>
+        <Node v-for="node in nodes" v-bind:key="node.id" :node="node">
+          <template #anchor="{node, selected}">
+            <slot
+              name="anchor"
+              v-bind:node="node"
+              v-bind:selected="selected"
+            ></slot>
+          </template>
 
-        <template #content="{node, selected, focus, update}">
-          <slot name="content" v-bind:node="node" v-bind:selected="selected" v-bind:focus="focus" v-bind:update="update"></slot>
-        </template>
+          <template #content="{node, selected, focus, update}">
+            <slot
+              name="content"
+              v-bind:node="node"
+              v-bind:selected="selected"
+              v-bind:focus="focus"
+              v-bind:update="update"
+            ></slot>
+          </template>
         </Node>
       </transition-group>
     </svg>

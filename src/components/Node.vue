@@ -1,6 +1,11 @@
 <template>
   <a v-bind:xlink:href="'#' + node.id" v-on:click="select" tabindex="-1">
-    <g ref="node" class="node" v-bind:transform="node.transform" v-bind:class="[{ selected }]">
+    <g
+      ref="node"
+      class="node"
+      v-bind:transform="node.transform"
+      v-bind:class="[{ selected }]"
+    >
       <slot name="anchor" v-bind:node="node" v-bind:selected="selected"></slot>
       <slot
         name="content"

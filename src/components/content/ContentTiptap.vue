@@ -1,5 +1,10 @@
 <template>
-  <foreignObject height="50" width="100" v-bind:x="textpos.x" v-bind:y="textpos.y">
+  <foreignObject
+    height="50"
+    width="100"
+    v-bind:x="textpos.x"
+    v-bind:y="textpos.y"
+  >
     <editor-content :editor="editor" />
   </foreignObject>
 </template>
