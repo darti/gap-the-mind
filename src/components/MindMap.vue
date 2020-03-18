@@ -1,10 +1,11 @@
 <template>
   <SvgPanZoom
     id="zoomable"
+    @svgpanzoom="registerSvgPanZoom"
     :zoomEnabled="true"
     :controlIconsEnabled="true"
-    :fit="false"
     :center="true"
+    :fit="false"
     minZoom="0.1"
   >
     <svg id="mindmap" :style="svgStyle" viewBox="-500 -500 1000 1000">
@@ -68,6 +69,8 @@ import nodes from "@/store/modules/nodes"
   }
 })
 export default class MindMap extends Vue {
+  private svgpanzoom!: SvgPanZoom
+
   public get nodes() {
     return layout.nodes
   }
@@ -76,13 +79,26 @@ export default class MindMap extends Vue {
     return layout.links
   }
 
+  private registerSvgPanZoom(svgpanzoom: SvgPanZoom) {
+    this.svgpanzoom = svgpanzoom
+  }
+
   private created() {
     window.addEventListener("keyup", this.processKeyboardEvent)
+     window.addEventListener("resize", this.processResizeEvent)
   }
 
   private destroyed() {
     window.removeEventListener("keyup", this.processKeyboardEvent)
+    window.removeEventListener("resize", this.processResizeEvent)
   }
+
+  private processResizeEvent() {
+    if(this.svgpanzoom) {
+      this.svgpanzoom.resize()
+    }
+  }
+
 
   private processKeyboardEvent(e: KeyboardEvent) {
     if (navigation.selectedNodeId) {
