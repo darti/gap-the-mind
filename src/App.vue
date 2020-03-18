@@ -7,8 +7,8 @@
       <template #anchor="{node, selected}">
         <AnchorCircle :node="node" :selected="selected" />
       </template>
-      <template #content="{node, selected, focus}">
-        <ContentTiptap :node="node" :selected="selected" :focus="focus" />
+      <template #content="{node, selected, focus, update}">
+        <ContentTiptap :node="node" :selected="selected" :focus="focus" :update="update" />
       </template>
     </MindMap>
   </div>

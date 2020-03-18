@@ -15,7 +15,7 @@ export interface LayoutModel {
 
 export interface NodeModel {
   id: NodeId
-  content: string
+  content: any
   size?: number
   parentId?: NodeId
 }

@@ -31,8 +31,8 @@
           <slot name="anchor" v-bind:node="node" v-bind:selected="selected" ></slot>
         </template>
 
-        <template #content="{node, selected, focus}">
-          <slot name="content" v-bind:node="node" v-bind:selected="selected" v-bind:focus="focus"></slot>
+        <template #content="{node, selected, focus, update}">
+          <slot name="content" v-bind:node="node" v-bind:selected="selected" v-bind:focus="focus" v-bind:update="update"></slot>
         </template>
         </Node>
       </transition-group>

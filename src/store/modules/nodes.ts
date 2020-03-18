@@ -59,6 +59,15 @@ class NodeModule extends VuexModule {
     this.nodes.splice(beforeIndex + 1, 0, newNode)
   }
 
+  @Mutation
+  setContent({ id, newContent }: { id: NodeId; newContent: any }) {
+    const node = this.nodes.find(n => n.id === id)
+
+    if (node) {
+      node.content = newContent
+    }
+  }
+
   @Action
   addChild(parentId: NodeId) {
     const id = uuidv4()
@@ -77,6 +86,10 @@ class NodeModule extends VuexModule {
 
       navigation.selectNode(id)
     }
+  }
+
+  @Action updateContent(payload: { id: NodeId; newContent: any }) {
+    this.setContent(payload)
   }
 }
 

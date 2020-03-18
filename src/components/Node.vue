@@ -1,8 +1,14 @@
 <template>
   <a v-bind:xlink:href="'#' + node.id" v-on:click="select" tabindex="-1">
     <g ref="node" class="node" v-bind:transform="node.transform" v-bind:class="[{ selected }]">
-      <slot name="anchor" v-bind:node="node" v-bind:selected="selected" v-bind:focus="focus"></slot>
-      <slot name="content" v-bind:node="node" v-bind:selected="selected" v-bind:focus="focus"></slot>
+      <slot name="anchor" v-bind:node="node" v-bind:selected="selected"></slot>
+      <slot
+        name="content"
+        v-bind:node="node"
+        v-bind:selected="selected"
+        v-bind:focus="focus"
+        v-bind:update="update"
+      ></slot>
     </g>
   </a>
 </template>
@@ -19,12 +25,20 @@ import nodes from "@/store/modules/nodes"
 export default class Node extends Vue {
   @Prop() private node!: NodeLayoutModel
 
-  private select() {
-    navigation.selectNode(this.node.id)
-  }
-
   private get focus() {
     return this.select.bind(this)
+  }
+
+  private get update() {
+    return this.updateContent.bind(this)
+  }
+
+  private updateContent(newContent: any) {
+    nodes.updateContent({ id: this.node.id, newContent })
+  }
+
+  private select() {
+    navigation.selectNode(this.node.id)
   }
 
   private get selected() {

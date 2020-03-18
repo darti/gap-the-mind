@@ -9,6 +9,8 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator"
 import { NodeLayoutModel } from "@/models/mindmap"
 import { Editor, EditorContent } from "tiptap"
 
+import _ from "lodash"
+
 @Component({
   components: {
     EditorContent
@@ -18,6 +20,7 @@ export default class TiptapContent extends Vue {
   @Prop() private node!: NodeLayoutModel
   @Prop() private selected!: boolean
   @Prop() private focus!: () => void
+  @Prop() private update!: (newContent: any) => void
 
   private editor = new Editor()
 
@@ -32,6 +35,9 @@ export default class TiptapContent extends Vue {
 
   private created() {
     this.editor.on("focus", e => this.focus())
+
+    const update = (e: any) => this.update(e.getHTML())
+    this.editor.on("update", _.debounce(update, 250, { maxWait: 2000 }))
   }
 
   @Watch("node", { immediate: true })
@@ -48,7 +54,7 @@ export default class TiptapContent extends Vue {
 }
 </script>
 
-<style lang="stylus" >
+<style lang="stylus">
 .ProseMirror-focused {
   outline-style: none;
 }
