@@ -7,8 +7,6 @@ import { ILogger } from "vuejs-logger/dist/interfaces/logger"
 
 Vue.config.productionTip = false
 
-const loggerOptions = {}
-
 Vue.use((VueLogger as unknown) as ILogger)
 
 new Vue({

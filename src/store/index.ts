@@ -1,6 +1,5 @@
 import Vue from "vue"
-import Vuex, { Store } from "vuex"
-import { MindMapModel, NodeModel } from "@/models/mindmap"
+import Vuex from "vuex"
 
 Vue.use(Vuex)
 

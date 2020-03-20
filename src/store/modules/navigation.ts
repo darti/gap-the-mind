@@ -1,4 +1,4 @@
-import { NodeModel, NodeId } from "@/models/mindmap"
+import { NodeId } from "@/models/mindmap"
 import {
   VuexModule,
   Module,

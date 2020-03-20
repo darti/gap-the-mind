@@ -1,16 +1,8 @@
 import * as d3 from "d3"
-import { GetterTree } from "vuex"
 
 import store from "@/store"
 
-import { NodeModel } from "@/models/mindmap"
-import {
-  VuexModule,
-  Module,
-  Mutation,
-  Action,
-  getModule
-} from "vuex-module-decorators"
+import { VuexModule, Module, getModule } from "vuex-module-decorators"
 
 import nodes from "./nodes"
 

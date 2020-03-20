@@ -1,4 +1,4 @@
-import { NodeId, NodeModel } from "../../models/mindmap"
+import { NodeId } from "../../models/mindmap"
 
 import { v4 as uuidv4 } from "uuid"
 
