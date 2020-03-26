@@ -8,7 +8,7 @@
         <AnchorCircle :node="node" :selected="selected" />
       </template>
       <template #content="{node, selected, focus, update}">
-        <ContentTiptap
+        <ContentSimple
           :node="node"
           :selected="selected"
           :focus="focus"
@@ -23,7 +23,7 @@
 import { Component, Vue } from "vue-property-decorator"
 import MindMap from "./components/MindMap.vue"
 
-import ContentTiptap from "./components/content/ContentTiptap.vue"
+import ContentSimple from "./components/content/ContentSimple.vue"
 import AnchorCircle from "./components/content/AnchorCircle.vue"
 import LinkPath from "./components/content/LinkPath.vue"
 
@@ -31,7 +31,7 @@ import LinkPath from "./components/content/LinkPath.vue"
   components: {
     MindMap,
     AnchorCircle,
-    ContentTiptap,
+    ContentSimple,
     LinkPath
   }
 })

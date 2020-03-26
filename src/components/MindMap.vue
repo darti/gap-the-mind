@@ -85,7 +85,7 @@ export default class MindMap extends Vue {
 
   private created() {
     window.addEventListener("keyup", this.processKeyboardEvent)
-     window.addEventListener("resize", this.processResizeEvent)
+    window.addEventListener("resize", this.processResizeEvent)
   }
 
   private destroyed() {
@@ -94,11 +94,10 @@ export default class MindMap extends Vue {
   }
 
   private processResizeEvent() {
-    if(this.svgpanzoom) {
+    if (this.svgpanzoom) {
       this.svgpanzoom.resize()
     }
   }
-
 
   private processKeyboardEvent(e: KeyboardEvent) {
     if (navigation.selectedNodeId) {
@@ -121,10 +120,20 @@ export default class MindMap extends Vue {
 
 .node {
   fill: white;
+  color white
 }
 
 .node.selected {
 
+}
+
+.nodes-enter-active, .nodes-leave-active {
+  transition: all 1s;
+}
+
+.nodes-enter {
+    opacity: 0;
+  transform: translateX(-30px);
 }
 
 .link {

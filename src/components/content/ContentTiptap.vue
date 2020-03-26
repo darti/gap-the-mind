@@ -31,7 +31,7 @@ export default class TiptapContent extends Vue {
 
   private textpos = {
     x: 15,
-    y: -25
+    y: -10
   }
 
   beforeDestroy() {
