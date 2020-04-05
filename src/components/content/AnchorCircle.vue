@@ -18,17 +18,20 @@ export default class CircleAnchor extends Vue {
 
 <style lang="stylus">
 @keyframes growshrink {
-   0% {
+  0% {
     transform: scale(0);
   }
+
   100% {
     transform: scale(1);
   }
 }
 
-.anchor-enter-active
-  animation  growshrink 0.4s ;
+.anchor-enter-active {
+  animation: growshrink 0.4s;
+}
 
-.anchor-leave-active
-  animation  growshrink 0.4s reverse;
+.anchor-leave-active {
+  animation: growshrink 0.4s reverse;
+}
 </style>
