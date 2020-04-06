@@ -27,11 +27,12 @@ export default class CircleAnchor extends Vue {
   }
 }
 
+
 .anchor-enter-active {
-  animation: growshrink 0.4s;
+  animation: growshrink 0.2s;
 }
 
 .anchor-leave-active {
-  animation: growshrink 0.4s reverse;
+  animation: growshrink 0.2s reverse;
 }
 </style>

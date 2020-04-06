@@ -5,6 +5,7 @@ import store from "@/store"
 import { VuexModule, Module, getModule } from "vuex-module-decorators"
 
 import nodes from "./nodes"
+import { LinkModel, NodeLayoutModel } from "@/models/mindmap"
 
 @Module({ dynamic: true, store, name: "layout" })
 class LayoutModule extends VuexModule {
@@ -21,27 +22,19 @@ class LayoutModule extends VuexModule {
     return this.tree(d3.hierarchy(d3.stratify()(nodes.nodes)))
   }
 
-  get nodes() {
+  get nodes(): NodeLayoutModel[] {
     return this.root.descendants().map((d: any) => ({
       ...d.data.data,
-      source: d,
-      transform: `translate(${d.y},${d.x})`
+      position: { x: d.y, y: d.x }
     }))
   }
 
-  get links() {
+  get links(): LinkModel[] {
     return this.root.links().map((link: any) => ({
-      id: `${link.source.data.id}-${link.target.data.id}`,
-      d: d3
-        .linkHorizontal()
-        //.source(l => [l.source[0], l.source])
-        .x((l: any) => l.y)
-        .y((l: any) => l.x)(link),
-      transform: "",
-      style: {
-        stroke: "grey"
-      },
-      source: link
+      originId: link.source.data.id,
+      targetId: link.target.data.id,
+      source: [link.source.y, link.source.x],
+      target: [link.target.y, link.target.x]
     }))
   }
 }

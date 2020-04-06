@@ -14,7 +14,7 @@
           v-for="link in links"
           :link="link"
           class="link"
-          v-bind:key="link.id"
+          v-bind:key="linkId(link)"
         >
           <template #link="{link}">
             <slot name="link" v-bind:link="link"></slot>
@@ -49,7 +49,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator"
-import { NodeModel } from "../models/mindmap"
+import { NodeModel, LinkModel } from "../models/mindmap"
 import SvgPanZoom from "vue-svg-pan-zoom"
 
 import Node from "./Node.vue"
@@ -77,6 +77,10 @@ export default class MindMap extends Vue {
 
   public get links() {
     return layout.links
+  }
+
+  private linkId(link: LinkModel) {
+    return `${link.originId}-${link.targetId}`
   }
 
   private registerSvgPanZoom(svgpanzoom: SvgPanZoom) {
@@ -128,7 +132,7 @@ export default class MindMap extends Vue {
 }
 
 .nodes-enter-active, .nodes-leave-active {
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 
 .nodes-enter {
@@ -137,6 +141,7 @@ export default class MindMap extends Vue {
 
 .link {
   fill: none;
+  stroke: grey
 }
 
 #mindmap {
