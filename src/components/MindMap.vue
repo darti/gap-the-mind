@@ -32,10 +32,11 @@
             ></slot>
           </template>
 
-          <template #content="{node, selected, focus, update}">
+          <template #content="{node, position, selected, focus, update}">
             <slot
               name="content"
               v-bind:node="node"
+              v-bind:position="position"
               v-bind:selected="selected"
               v-bind:focus="focus"
               v-bind:update="update"

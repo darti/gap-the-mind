@@ -1,17 +1,12 @@
 <template>
-  <foreignObject
-    height="50"
-    width="100"
-    v-bind:x="textpos.x"
-    v-bind:y="textpos.y"
-  >
+  <foreignObject height="50" width="100" v-bind:x="textpos.x" v-bind:y="textpos.y">
     <div>{{ node.content }}</div>
   </foreignObject>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator"
-import { NodeLayoutModel } from "@/models/mindmap"
+import { NodeLayoutModel, PointModel } from "@/models/mindmap"
 import { Editor, EditorContent } from "tiptap"
 
 import _ from "lodash"
@@ -23,6 +18,7 @@ import _ from "lodash"
 })
 export default class SimpleContent extends Vue {
   @Prop() private node!: NodeLayoutModel
+  @Prop() private position!: PointModel
   @Prop() private selected!: boolean
   @Prop() private focus!: () => void
   @Prop() private update!: (newContent: any) => void

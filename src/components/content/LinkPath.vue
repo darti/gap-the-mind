@@ -14,7 +14,8 @@ export default class Link extends Vue {
   private get path() {
     const d = d3
       .linkHorizontal()
-
+      .source(l => [l.source[0] + 50, l.source[1]])
+      .target(l => [l.target[0], l.target[1]])
       .x((l: any) => l[0])
       .y((l: any) => l[1])(this.link)
 
