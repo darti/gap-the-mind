@@ -1,10 +1,11 @@
 <template>
   <a v-bind:xlink:href="'#' + node.id" v-on:click="select" tabindex="-1">
     <g ref="node" class="node" v-bind:transform="transform" v-bind:class="[{ selected }]">
-      <slot name="anchor" v-bind:node="node" v-bind:selected="selected"></slot>
+      <slot name="anchor" v-bind:node="node" v-bind:position="position" v-bind:selected="selected"></slot>
       <slot
         name="content"
         v-bind:node="node"
+        v-bind:position="position"
         v-bind:selected="selected"
         v-bind:focus="focus"
         v-bind:update="update"
@@ -15,12 +16,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator"
-import {
-  NodeModel,
-  LayoutModel,
-  NodeLayoutModel,
-  PointModel
-} from "../models/mindmap"
+import { NodeModel, LayoutModel, PointModel } from "../models/mindmap"
 import { Action, State } from "vuex-class"
 
 import navigation from "@/store/modules/navigation"
@@ -28,7 +24,7 @@ import nodes from "@/store/modules/nodes"
 
 @Component({})
 export default class Node extends Vue {
-  @Prop() private node!: NodeLayoutModel
+  @Prop() private node!: NodeModel
   @Prop() private position!: PointModel
 
   private get focus() {
@@ -52,7 +48,11 @@ export default class Node extends Vue {
   }
 
   private get transform() {
-    return `translate(${this.node.position.x}, ${this.node.position.y})`
+    return `translate(${this.position.x}, ${this.position.y})`
+  }
+  @Watch("position", { deep: true })
+  onPointModelChanged(value: PointModel, oldValue: PointModel) {
+    this.$log.info("Position change", oldValue, value)
   }
 }
 </script>

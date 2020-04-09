@@ -16,17 +16,17 @@ export interface PointModel {
 }
 
 export interface LayoutModel {
-  nodeSize: [number, number]
+  id: NodeId
   position: PointModel
 }
+
+export type LayoutMap = { [id: string]: LayoutModel }
 
 export interface NodeModel {
   id: NodeId
   content: any
   parentId?: NodeId
 }
-
-export type NodeLayoutModel = NodeModel & LayoutModel
 
 export interface LinkModel extends DefaultLinkObject {
   originId: string

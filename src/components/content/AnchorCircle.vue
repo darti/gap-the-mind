@@ -7,11 +7,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator"
-import { NodeLayoutModel } from "@/models/mindmap"
+import { NodeModel } from "@/models/mindmap"
 
 @Component({})
 export default class CircleAnchor extends Vue {
-  @Prop() private node!: NodeLayoutModel
+  @Prop() private node!: NodeModel
   @Prop() private selected!: boolean
 }
 </script>
@@ -27,7 +27,6 @@ export default class CircleAnchor extends Vue {
   }
 }
 
-
 .anchor-enter-active {
   animation: growshrink 0.2s;
 }
@@ -36,3 +35,4 @@ export default class CircleAnchor extends Vue {
   animation: growshrink 0.2s reverse;
 }
 </style>
+

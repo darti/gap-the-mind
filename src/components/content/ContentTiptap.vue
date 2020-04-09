@@ -1,17 +1,12 @@
 <template>
-  <foreignObject
-    height="50"
-    width="100"
-    v-bind:x="textpos.x"
-    v-bind:y="textpos.y"
-  >
+  <foreignObject height="50" width="100" v-bind:x="textpos.x" v-bind:y="textpos.y">
     <editor-content :editor="editor" />
   </foreignObject>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator"
-import { NodeLayoutModel } from "@/models/mindmap"
+import { NodeModel } from "@/models/mindmap"
 import { Editor, EditorContent } from "tiptap"
 
 import _ from "lodash"
@@ -22,7 +17,7 @@ import _ from "lodash"
   }
 })
 export default class TiptapContent extends Vue {
-  @Prop() private node!: NodeLayoutModel
+  @Prop() private node!: NodeModel
   @Prop() private selected!: boolean
   @Prop() private focus!: () => void
   @Prop() private update!: (newContent: any) => void
@@ -46,7 +41,7 @@ export default class TiptapContent extends Vue {
   }
 
   @Watch("node", { immediate: true })
-  private onNodeChanged(newNode: NodeLayoutModel, oldNode: NodeLayoutModel) {
+  private onNodeChanged(newNode: NodeModel, oldNode: NodeModel) {
     this.editor.setContent(newNode.content)
   }
 

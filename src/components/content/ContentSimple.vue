@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator"
-import { NodeLayoutModel, PointModel } from "@/models/mindmap"
+import { PointModel, NodeModel } from "@/models/mindmap"
 import { Editor, EditorContent } from "tiptap"
 
 import _ from "lodash"
@@ -17,7 +17,7 @@ import _ from "lodash"
   }
 })
 export default class SimpleContent extends Vue {
-  @Prop() private node!: NodeLayoutModel
+  @Prop() private node!: NodeModel
   @Prop() private position!: PointModel
   @Prop() private selected!: boolean
   @Prop() private focus!: () => void

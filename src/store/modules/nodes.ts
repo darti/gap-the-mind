@@ -1,4 +1,4 @@
-import { NodeId } from "../../models/mindmap"
+import { NodeId, NodeModel } from "../../models/mindmap"
 
 import { v4 as uuidv4 } from "uuid"
 
@@ -22,7 +22,7 @@ interface AddNodePayload {
 
 @Module({ dynamic: true, store, name: "nodes" })
 class NodeModule extends VuexModule {
-  nodes = [
+  nodes: NodeModel[] = [
     {
       id: "0",
       content: "root"

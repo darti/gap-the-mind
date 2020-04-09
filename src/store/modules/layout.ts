@@ -5,28 +5,34 @@ import store from "@/store"
 import { VuexModule, Module, getModule } from "vuex-module-decorators"
 
 import nodes from "./nodes"
-import { LinkModel, NodeLayoutModel } from "@/models/mindmap"
+import { LinkModel, LayoutModel, NodeModel, LayoutMap } from "@/models/mindmap"
 
 @Module({ dynamic: true, store, name: "layout" })
 class LayoutModule extends VuexModule {
   nodeSize: [number, number] = [5, 100]
 
-  get tree() {
-    return d3
-      .tree()
+  get root() {
+    const stratify = d3.stratify<NodeModel>()
+
+    const tree = d3
+      .tree<d3.HierarchyNode<NodeModel>>()
       .separation((a, b) => (a.parent == b.parent ? 10 : 20) / a.depth)
       .nodeSize(this.nodeSize)
+
+    return tree(d3.hierarchy(stratify(nodes.nodes)))
   }
 
-  get root() {
-    return this.tree(d3.hierarchy(d3.stratify()(nodes.nodes)))
-  }
-
-  get nodes(): NodeLayoutModel[] {
-    return this.root.descendants().map((d: any) => ({
-      ...d.data.data,
-      position: { x: d.y, y: d.x }
-    }))
+  get layout(): LayoutMap {
+    return this.root.descendants().reduce<LayoutMap>(
+      (
+        m: LayoutMap,
+        d: d3.HierarchyPointNode<d3.HierarchyNode<NodeModel>>
+      ) => ({
+        ...m,
+        [d.data.data.id]: { id: d.data.data.id, position: { x: d.y, y: d.x } }
+      }),
+      {}
+    )
   }
 
   get links(): LinkModel[] {

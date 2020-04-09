@@ -23,7 +23,7 @@
       </transition-group>
 
       <transition-group tag="g" name="nodes">
-        <Node v-for="node in nodes" v-bind:key="node.id" :node="node">
+        <Node v-for="node in nodes" v-bind:key="node.id" :node="node" :position="position(node.id)">
           <template #anchor="{node, selected}">
             <slot
               name="anchor"
@@ -32,7 +32,7 @@
             ></slot>
           </template>
 
-          <template #content="{node, position, selected, focus, update}">
+          <template #content="{node, selected, focus, update, position}">
             <slot
               name="content"
               v-bind:node="node"
@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator"
-import { NodeModel, LinkModel } from "../models/mindmap"
+import { NodeModel, LinkModel, NodeId } from "../models/mindmap"
 import SvgPanZoom from "vue-svg-pan-zoom"
 
 import Node from "./Node.vue"
@@ -73,11 +73,19 @@ export default class MindMap extends Vue {
   private svgpanzoom!: SvgPanZoom
 
   public get nodes() {
-    return layout.nodes
+    return nodes.nodes
+  }
+
+  public get layout() {
+    return layout.layout
   }
 
   public get links() {
     return layout.links
+  }
+
+  private position(id: NodeId) {
+    return this.layout[id].position
   }
 
   private linkId(link: LinkModel) {
