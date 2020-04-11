@@ -28,6 +28,7 @@ import gsap from "gsap"
 
 import navigation from "@/store/modules/navigation"
 import nodes from "@/store/modules/nodes"
+import layout from "../store/modules/layout"
 
 @Component({})
 export default class Node extends Vue {
@@ -37,11 +38,19 @@ export default class Node extends Vue {
   private tweenedPosition = OriginPoint()
 
   mounted() {
-    gsap.to(this.tweenedPosition, {
+    gsap.fromTo(this.tweenedPosition, this.parentNodePosition, {
       duration: 1,
       x: this.position.x,
       y: this.position.y
     })
+  }
+
+  get parentNodePosition() {
+    if (this.node.parentId) {
+      return layout.layout[this.node.parentId].position
+    }
+
+    return OriginPoint()
   }
 
   private get animatedPosition() {
