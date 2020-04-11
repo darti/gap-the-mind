@@ -8,12 +8,7 @@
         <AnchorCircle :node="node" :selected="selected" />
       </template>
       <template #content="{node, selected, focus, update}">
-        <ContentSimple
-          :node="node"
-          :selected="selected"
-          :focus="focus"
-          :update="update"
-        />
+        <ContentSimple :node="node" :selected="selected" :focus="focus" :update="update" />
       </template>
     </MindMap>
   </div>
@@ -25,14 +20,11 @@ import MindMap from "./components/MindMap.vue"
 
 import ContentSimple from "./components/content/ContentSimple.vue"
 import AnchorCircle from "./components/content/AnchorCircle.vue"
-import LinkPath from "./components/content/LinkPath.vue"
-
 @Component({
   components: {
     MindMap,
     AnchorCircle,
-    ContentSimple,
-    LinkPath
+    ContentSimple
   }
 })
 export default class App extends Vue {}

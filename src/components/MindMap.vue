@@ -16,9 +16,6 @@
           class="link"
           v-bind:key="linkId(link)"
         >
-          <template #link="{link}">
-            <slot name="link" v-bind:link="link"></slot>
-          </template>
         </Link>
       </transition-group>
 
