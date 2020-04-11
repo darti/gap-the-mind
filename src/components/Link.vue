@@ -13,18 +13,12 @@ export default class Link extends Vue {
   private tweenedTarget = OriginPoint()
 
   mounted() {
-    gsap.fromTo(this.tweenedTarget, this.link.origin, {
-      duration: 1,
-      ...this.link.target
-    })
+    gsap.fromTo(this.tweenedTarget, 1, this.link.origin, this.link.target)
   }
 
   @Watch("link", { deep: true })
   onPointModelChanged(value: LinkModel, oldValue: LinkModel) {
-    gsap.to(this.tweenedTarget, {
-      duration: 1,
-      ...value.target
-    })
+    gsap.to(this.tweenedTarget, 1, value.target)
   }
 
   private get path() {

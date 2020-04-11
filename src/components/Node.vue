@@ -1,7 +1,7 @@
 <template>
   <a v-bind:xlink:href="'#' + node.id" v-on:click="select" tabindex="-1">
     <g ref="node" class="node" v-bind:transform="transform" v-bind:class="[{ selected }]">
-      <slot name="anchor" v-bind:node="node" v-bind:position="position" v-bind:selected="selected"></slot>
+      <circle :r="tweenedR.value" />
       <slot
         name="content"
         v-bind:node="node"
@@ -37,12 +37,11 @@ export default class Node extends Vue {
 
   private tweenedPosition = OriginPoint()
 
+  private tweenedR = { value: 5 }
+
   mounted() {
-    gsap.fromTo(this.tweenedPosition, this.parentNodePosition, {
-      duration: 1,
-      x: this.position.x,
-      y: this.position.y
-    })
+    gsap.fromTo(this.tweenedPosition, 1, this.parentNodePosition, this.position)
+    gsap.to(this.tweenedR, 1, { value: this.selected ? 15 : 5 })
   }
 
   get parentNodePosition() {
@@ -83,7 +82,12 @@ export default class Node extends Vue {
 
   @Watch("position", { deep: true })
   onPointModelChanged(value: PointModel, oldValue: PointModel) {
-    gsap.to(this.tweenedPosition, { duration: 1, x: value.x, y: value.y })
+    gsap.to(this.tweenedPosition, 1, value)
+  }
+
+  @Watch("selected", { deep: true })
+  onSelectedChanged(value: boolean, oldValue: boolean) {
+    gsap.to(this.tweenedR, 1, { value: this.selected ? 15 : 5 })
   }
 }
 </script>
