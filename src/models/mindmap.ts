@@ -15,6 +15,11 @@ export interface PointModel {
   y: number
 }
 
+export const OriginPoint: () => PointModel = () => ({
+  x: 0,
+  y: 0
+})
+
 export interface LayoutModel {
   id: NodeId
   position: PointModel
@@ -28,7 +33,10 @@ export interface NodeModel {
   parentId?: NodeId
 }
 
-export interface LinkModel extends DefaultLinkObject {
+export interface LinkModel {
   originId: string
   targetId: string
+
+  origin: PointModel
+  target: PointModel
 }

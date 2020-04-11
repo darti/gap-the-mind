@@ -16,8 +16,15 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from "vue-property-decorator"
-import { NodeModel, LayoutModel, PointModel } from "../models/mindmap"
+import {
+  NodeModel,
+  LayoutModel,
+  PointModel,
+  OriginPoint
+} from "../models/mindmap"
 import { Action, State } from "vuex-class"
+
+import gsap from "gsap"
 
 import navigation from "@/store/modules/navigation"
 import nodes from "@/store/modules/nodes"
@@ -26,6 +33,20 @@ import nodes from "@/store/modules/nodes"
 export default class Node extends Vue {
   @Prop() private node!: NodeModel
   @Prop() private position!: PointModel
+
+  private tweenedPosition = OriginPoint()
+
+  mounted() {
+    gsap.to(this.tweenedPosition, {
+      duration: 1,
+      x: this.position.x,
+      y: this.position.y
+    })
+  }
+
+  private get animatedPosition() {
+    return this.tweenedPosition
+  }
 
   private get focus() {
     return this.select.bind(this)
@@ -48,11 +69,12 @@ export default class Node extends Vue {
   }
 
   private get transform() {
-    return `translate(${this.position.x}, ${this.position.y})`
+    return `translate(${this.tweenedPosition.x}, ${this.tweenedPosition.y})`
   }
+
   @Watch("position", { deep: true })
   onPointModelChanged(value: PointModel, oldValue: PointModel) {
-    this.$log.info("Position change", oldValue, value)
+    gsap.to(this.tweenedPosition, { duration: 1, x: value.x, y: value.y })
   }
 }
 </script>

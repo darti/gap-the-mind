@@ -140,13 +140,6 @@ export default class MindMap extends Vue {
 
 }
 
-.nodes-enter-active, .nodes-leave-active {
-  transition: all 0.3s;
-}
-
-.nodes-enter {
-  transform: translateX(-100px);
-}
 
 .link {
   fill: none;

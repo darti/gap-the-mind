@@ -39,8 +39,8 @@ class LayoutModule extends VuexModule {
     return this.root.links().map((link: any) => ({
       originId: link.source.data.id,
       targetId: link.target.data.id,
-      source: [link.source.y, link.source.x],
-      target: [link.target.y, link.target.x]
+      origin: { x: link.source.y, y: link.source.x },
+      target: { x: link.target.y, y: link.target.x }
     }))
   }
 }
