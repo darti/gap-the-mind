@@ -3,22 +3,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator"
+import { Component, Prop, Vue, Watch, Mixins } from "vue-property-decorator"
 import { LinkModel, PointModel, OriginPoint } from "@/models/mindmap"
 import gsap from "gsap"
+import Theme from "./Theme.vue"
 
 @Component
-export default class Link extends Vue {
+export default class Link extends Mixins(Theme) {
   @Prop() private link!: LinkModel
   private tweenedTarget = OriginPoint()
 
   mounted() {
-    gsap.fromTo(this.tweenedTarget, 1, this.link.origin, this.link.target)
+    gsap.fromTo(
+      this.tweenedTarget,
+      this.animationSpeed,
+      this.link.origin,
+      this.link.target
+    )
   }
 
   @Watch("link", { deep: true })
   onPointModelChanged(value: LinkModel, oldValue: LinkModel) {
-    gsap.to(this.tweenedTarget, 1, value.target)
+    gsap.to(this.tweenedTarget, this.animationSpeed, value.target)
   }
 
   private get path() {

@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator"
+import { Component, Prop, Vue, Watch, Mixins } from "vue-property-decorator"
 import {
   NodeModel,
   LayoutModel,
@@ -29,9 +29,10 @@ import gsap from "gsap"
 import navigation from "@/store/modules/navigation"
 import nodes from "@/store/modules/nodes"
 import layout from "../store/modules/layout"
+import Theme from "./Theme.vue"
 
 @Component({})
-export default class Node extends Vue {
+export default class Node extends Mixins(Theme) {
   @Prop() private node!: NodeModel
   @Prop() private position!: PointModel
 
@@ -40,8 +41,15 @@ export default class Node extends Vue {
   private tweenedR = { value: 5 }
 
   mounted() {
-    gsap.fromTo(this.tweenedPosition, 1, this.parentNodePosition, this.position)
-    gsap.to(this.tweenedR, 1, { value: this.selected ? 15 : 5 })
+    gsap.fromTo(
+      this.tweenedPosition,
+      this.animationSpeed,
+      this.parentNodePosition,
+      this.position
+    )
+    gsap.to(this.tweenedR, this.animationSpeed, {
+      value: this.selected ? 15 : 5
+    })
   }
 
   get parentNodePosition() {
@@ -82,12 +90,14 @@ export default class Node extends Vue {
 
   @Watch("position", { deep: true })
   onPointModelChanged(value: PointModel, oldValue: PointModel) {
-    gsap.to(this.tweenedPosition, 1, value)
+    gsap.to(this.tweenedPosition, this.animationSpeed, value)
   }
 
   @Watch("selected", { deep: true })
   onSelectedChanged(value: boolean, oldValue: boolean) {
-    gsap.to(this.tweenedR, 1, { value: this.selected ? 15 : 5 })
+    gsap.to(this.tweenedR, this.animationSpeed, {
+      value: this.selected ? 15 : 5
+    })
   }
 }
 </script>
