@@ -4,9 +4,7 @@
       <template #link="{link}">
         <LinkPath :link="link" />
       </template>
-      <template #anchor="{node, selected}">
-        <AnchorCircle :node="node" :selected="selected" />
-      </template>
+
       <template #content="{node, selected, focus, update}">
         <ContentSimple :node="node" :selected="selected" :focus="focus" :update="update" />
       </template>
@@ -19,11 +17,9 @@ import { Component, Vue } from "vue-property-decorator"
 import MindMap from "./components/MindMap.vue"
 
 import ContentSimple from "./components/content/ContentSimple.vue"
-import AnchorCircle from "./components/content/AnchorCircle.vue"
 @Component({
   components: {
     MindMap,
-    AnchorCircle,
     ContentSimple
   }
 })

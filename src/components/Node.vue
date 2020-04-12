@@ -47,9 +47,8 @@ export default class Node extends Mixins(Theme) {
       this.parentNodePosition,
       this.position
     )
-    gsap.to(this.tweenedR, this.animationSpeed, {
-      value: this.selected ? 15 : 5
-    })
+
+    this.animateSection()
   }
 
   get parentNodePosition() {
@@ -88,6 +87,13 @@ export default class Node extends Mixins(Theme) {
     return `translate(${this.tweenedPosition.x}, ${this.tweenedPosition.y})`
   }
 
+  private animateSection() {
+    gsap.to(this.tweenedR, this.selectAnimationSpeed, {
+      ease: "elastic.out(1, 0.3)",
+      value: this.selected ? 10 : 5
+    })
+  }
+
   @Watch("position", { deep: true })
   onPointModelChanged(value: PointModel, oldValue: PointModel) {
     gsap.to(this.tweenedPosition, this.animationSpeed, value)
@@ -95,9 +101,7 @@ export default class Node extends Mixins(Theme) {
 
   @Watch("selected", { deep: true })
   onSelectedChanged(value: boolean, oldValue: boolean) {
-    gsap.to(this.tweenedR, this.animationSpeed, {
-      value: this.selected ? 15 : 5
-    })
+    this.animateSection()
   }
 }
 </script>
