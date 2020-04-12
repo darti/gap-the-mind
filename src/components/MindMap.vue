@@ -86,7 +86,7 @@ export default class MindMap extends Vue {
   }
 
   private linkId(link: LinkModel) {
-    return `${link.originId}-${link.targetId}`
+    return `${link.sourceId}-${link.targetId}`
   }
 
   private registerSvgPanZoom(svgpanzoom: SvgPanZoom) {

@@ -11,31 +11,38 @@ import Theme from "./Theme.vue"
 @Component
 export default class Link extends Mixins(Theme) {
   @Prop() private link!: LinkModel
-  private tweenedLink = { origin: OriginPoint(), target: OriginPoint() }
+
+  private tweenedTarget = OriginPoint()
+  private tweenedSource = OriginPoint()
 
   mounted() {
     gsap.fromTo(
-      this.tweenedLink,
+      this.tweenedTarget,
       this.animationSpeed,
-      { origin: this.link.origin, target: this.link.origin },
-      { origin: this.link.origin, target: this.link.target }
+      this.link.source,
+      this.link.target
+    )
+
+    gsap.fromTo(
+      this.tweenedSource,
+      this.animationSpeed,
+      this.link.source,
+      this.link.source
     )
   }
 
   @Watch("link", { deep: true })
   onPointModelChanged(value: LinkModel, oldValue: LinkModel) {
-    gsap.to(this.tweenedLink, this.animationSpeed, {
-      origin: value.origin,
-      target: value.target
-    })
+    gsap.to(this.tweenedTarget, this.animationSpeed, value.target)
+    gsap.to(this.tweenedSource, this.animationSpeed, value.source)
   }
 
   private get path() {
-    const ox = this.tweenedLink.origin.x + 50
-    const oy = this.tweenedLink.origin.y
+    const ox = this.tweenedSource.x + 50
+    const oy = this.tweenedSource.y
 
-    const tx = this.tweenedLink.target.x
-    const ty = this.tweenedLink.target.y
+    const tx = this.tweenedTarget.x
+    const ty = this.tweenedTarget.y
 
     return `M${ox},${oy}C${(ox + tx) * 0.5},${oy},${ox},${ty},${tx},${ty}`
   }

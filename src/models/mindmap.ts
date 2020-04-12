@@ -34,9 +34,9 @@ export interface NodeModel {
 }
 
 export interface LinkModel {
-  originId: string
+  sourceId: string
   targetId: string
 
-  origin: PointModel
+  source: PointModel
   target: PointModel
 }
