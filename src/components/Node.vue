@@ -26,7 +26,6 @@ import { Action, State } from "vuex-class"
 
 import gsap from "gsap"
 
-import navigation from "@/store/modules/navigation"
 import nodes from "@/store/modules/nodes"
 import layout from "../store/modules/layout"
 import Theme from "./Theme.vue"
@@ -76,11 +75,11 @@ export default class Node extends Mixins(Theme) {
   }
 
   private select() {
-    navigation.selectNode(this.node.id)
+    nodes.selectNode(this.node.id)
   }
 
   private get selected() {
-    return this.node && this.node.id === navigation.selectedNodeId
+    return this.node && this.node.id === nodes.selectedNodeId
   }
 
   private get transform() {

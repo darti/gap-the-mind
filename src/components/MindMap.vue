@@ -56,7 +56,6 @@ import Link from "./Link.vue"
 import { State, Getter, Action, Mutation, namespace } from "vuex-class"
 
 import layout from "@/store/modules/layout"
-import navigation from "../store/modules/navigation"
 import nodes from "@/store/modules/nodes"
 
 @Component({
@@ -110,11 +109,11 @@ export default class MindMap extends Vue {
   }
 
   private processKeyboardEvent(e: KeyboardEvent) {
-    if (navigation.selectedNodeId) {
+    if (nodes.selectedNodeId) {
       if (e.code === "Enter" && e.shiftKey) {
-        nodes.addChild(navigation.selectedNodeId)
+        nodes.addChild(nodes.selectedNodeId)
       } else if (e.code === "Enter") {
-        nodes.addSibling(navigation.selectedNodeId)
+        nodes.addSibling(nodes.selectedNodeId)
       }
     }
   }

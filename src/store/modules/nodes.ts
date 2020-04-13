@@ -11,7 +11,6 @@ import {
 } from "vuex-module-decorators"
 
 import store from "@/store"
-import navigation from "./navigation"
 
 interface AddNodePayload {
   id: NodeId
@@ -20,7 +19,12 @@ interface AddNodePayload {
   focus?: boolean
 }
 
-@Module({ dynamic: true, store, name: "nodes" })
+@Module({
+  dynamic: true,
+  store,
+  name: "nodes",
+  preserveState: localStorage.getItem("vuex") !== null
+})
 class NodeModule extends VuexModule {
   nodes: NodeModel[] = [
     {
@@ -43,6 +47,8 @@ class NodeModule extends VuexModule {
       parentId: "0"
     }
   ]
+
+  selectedNodeId = "0"
 
   @Mutation
   addNode({ id, parentId, beforeId }: AddNodePayload) {
@@ -73,7 +79,7 @@ class NodeModule extends VuexModule {
     const id = uuidv4()
     this.addNode({ id, parentId: parentId })
 
-    navigation.selectNode(id)
+    this.selectNode(id)
   }
 
   @Action
@@ -84,12 +90,24 @@ class NodeModule extends VuexModule {
       const id = uuidv4()
       this.addNode({ id, beforeId: sibblingId, parentId: sibbling.parentId })
 
-      navigation.selectNode(id)
+      this.selectNode(id)
     }
   }
 
   @Action updateContent(payload: { id: NodeId; newContent: any }) {
     this.setContent(payload)
+  }
+
+  @Mutation
+  setSelectNode(id: NodeId) {
+    this.selectedNodeId = id
+  }
+
+  @Action
+  selectNode(id: NodeId) {
+    if (this.selectedNodeId != id) {
+      this.setSelectNode(id)
+    }
   }
 }
 

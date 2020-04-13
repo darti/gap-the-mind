@@ -7,7 +7,11 @@ import { VuexModule, Module, getModule } from "vuex-module-decorators"
 import nodes from "./nodes"
 import { LinkModel, LayoutModel, NodeModel, LayoutMap } from "@/models/mindmap"
 
-@Module({ dynamic: true, store, name: "layout" })
+@Module({
+  dynamic: true,
+  store,
+  name: "layout"
+})
 class LayoutModule extends VuexModule {
   nodeSize: [number, number] = [5, 100]
 
