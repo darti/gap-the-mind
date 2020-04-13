@@ -1,12 +1,8 @@
 <template>
   <div id="app">
     <MindMap>
-      <template #link="{link}">
-        <LinkPath :link="link" />
-      </template>
-
       <template #content="{node, selected, focus, update}">
-        <ContentSimple :node="node" :selected="selected" :focus="focus" :update="update" />
+        <ConteTiptap :node="node" :selected="selected" :focus="focus" :update="update" />
       </template>
     </MindMap>
   </div>
@@ -17,10 +13,12 @@ import { Component, Vue } from "vue-property-decorator"
 import MindMap from "./components/MindMap.vue"
 
 import ContentSimple from "./components/content/ContentSimple.vue"
+import ConteTiptap from "./components/content/ContentTiptap.vue"
 @Component({
   components: {
     MindMap,
-    ContentSimple
+    ContentSimple,
+    ConteTiptap
   }
 })
 export default class App extends Vue {}
