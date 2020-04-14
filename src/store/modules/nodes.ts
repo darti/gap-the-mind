@@ -15,6 +15,7 @@ import store from "@/store"
 interface AddNodePayload {
   id: NodeId
   beforeId?: NodeId
+  before?: boolean
   parentId: NodeId
   focus?: boolean
 }
@@ -51,7 +52,7 @@ class NodeModule extends VuexModule {
   selectedNodeId = "0"
 
   @Mutation
-  addNode({ id, parentId, beforeId }: AddNodePayload) {
+  addNode({ id, parentId, beforeId, before }: AddNodePayload) {
     const beforeIndex = beforeId
       ? this.nodes.findIndex(n => n.id === beforeId)
       : -1
@@ -59,10 +60,10 @@ class NodeModule extends VuexModule {
     const newNode = {
       id,
       parentId: parentId,
-      content: "Test"
+      content: id
     }
 
-    this.nodes.splice(beforeIndex + 1, 0, newNode)
+    this.nodes.splice(before ? beforeIndex : beforeIndex + 1, 0, newNode)
   }
 
   @Mutation
@@ -83,12 +84,17 @@ class NodeModule extends VuexModule {
   }
 
   @Action
-  addSibling(sibblingId: NodeId) {
+  addSibling({ sibblingId, before }: { sibblingId: NodeId; before: boolean }) {
     const sibbling = this.nodes.find(n => n.id === sibblingId)
 
     if (sibbling && sibbling.parentId) {
       const id = uuidv4()
-      this.addNode({ id, beforeId: sibblingId, parentId: sibbling.parentId })
+      this.addNode({
+        id,
+        beforeId: sibblingId,
+        parentId: sibbling.parentId,
+        before
+      })
 
       this.selectNode(id)
     }

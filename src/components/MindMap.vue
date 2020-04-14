@@ -113,7 +113,9 @@ export default class MindMap extends Vue {
       if (e.code === "ArrowRight" && e.shiftKey) {
         nodes.addChild(nodes.selectedNodeId)
       } else if (e.code === "ArrowDown") {
-        nodes.addSibling(nodes.selectedNodeId)
+        nodes.addSibling({sibblingId: nodes.selectedNodeId, before: false})
+      } else if (e.code === "ArrowUp") {
+        nodes.addSibling({sibblingId: nodes.selectedNodeId, before:true})
       }
     }
   }
