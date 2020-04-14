@@ -110,9 +110,9 @@ export default class MindMap extends Vue {
 
   private processKeyboardEvent(e: KeyboardEvent) {
     if (nodes.selectedNodeId) {
-      if (e.code === "Enter" && e.shiftKey) {
+      if (e.code === "ArrowRight" && e.shiftKey) {
         nodes.addChild(nodes.selectedNodeId)
-      } else if (e.code === "Enter") {
+      } else if (e.code === "ArrowDown") {
         nodes.addSibling(nodes.selectedNodeId)
       }
     }

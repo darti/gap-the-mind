@@ -9,6 +9,21 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator"
 import { NodeModel } from "@/models/mindmap"
 import { Editor, EditorContent } from "tiptap"
 
+import {
+  Blockquote,
+  CodeBlock,
+  HardBreak,
+  Heading,
+  OrderedList,
+  BulletList,
+  ListItem,
+  TodoItem,
+  TodoList,
+  Bold,
+  Italic,
+  History
+} from "tiptap-extensions"
+
 import _ from "lodash"
 
 @Component({
@@ -22,7 +37,22 @@ export default class TiptapContent extends Vue {
   @Prop() private focus!: () => void
   @Prop() private update!: (newContent: any) => void
 
-  private editor = new Editor()
+  private editor = new Editor({
+    extensions: [
+      new Blockquote(),
+      new BulletList(),
+      new CodeBlock(),
+      new HardBreak(),
+      new Heading({ levels: [1, 2, 3] }),
+      new ListItem(),
+      new OrderedList(),
+      new TodoItem(),
+      new TodoList(),
+      new Bold(),
+      new Italic(),
+      new History()
+    ]
+  })
 
   private textpos = {
     x: 15,
