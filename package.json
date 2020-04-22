@@ -17,6 +17,7 @@
     "d3": "^5.15.0",
     "gsap": "^3.2.6",
     "lodash": "^4.17.15",
+    "monaco-editor-vue": "^1.0.10",
     "tiptap": "^1.26.6",
     "tiptap-extensions": "^1.28.6",
     "uuid": "^7.0.2",

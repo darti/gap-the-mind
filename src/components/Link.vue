@@ -38,7 +38,7 @@ export default class Link extends Mixins(Theme) {
   }
 
   private get path() {
-    const ox = this.tweenedSource.x + 50
+    const ox = this.tweenedSource.x + 80
     const oy = this.tweenedSource.y
 
     const tx = this.tweenedTarget.x

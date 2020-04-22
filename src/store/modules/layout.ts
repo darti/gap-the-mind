@@ -5,7 +5,7 @@ import store from "@/store"
 import { VuexModule, Module, getModule } from "vuex-module-decorators"
 
 import nodes from "./nodes"
-import { LinkModel, LayoutModel, NodeModel, LayoutMap } from "@/models/mindmap"
+import { LinkModel, NodeModel, LayoutMap } from "@/models/mindmap"
 
 @Module({
   dynamic: true,
@@ -13,14 +13,14 @@ import { LinkModel, LayoutModel, NodeModel, LayoutMap } from "@/models/mindmap"
   name: "layout"
 })
 class LayoutModule extends VuexModule {
-  nodeSize: [number, number] = [5, 100]
+  nodeSize: [number, number] = [5, 150]
 
   get root() {
     const stratify = d3.stratify<NodeModel>()
 
     const tree = d3
       .tree<d3.HierarchyNode<NodeModel>>()
-      .separation((a, b) => (a.parent == b.parent ? 10 : 20) / a.depth)
+      .separation((a, b) => (a.parent == b.parent ? 10 : 20))
       .nodeSize(this.nodeSize)
 
     return tree(d3.hierarchy(stratify(nodes.nodes)))

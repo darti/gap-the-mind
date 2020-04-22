@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator"
+import { Component, Prop, Vue, Watch, Mixins } from "vue-property-decorator"
 import { NodeModel } from "@/models/mindmap"
 import { Editor, EditorContent } from "tiptap"
 
@@ -25,13 +25,14 @@ import {
 } from "tiptap-extensions"
 
 import _ from "lodash"
+import Theme from "../Theme.vue"
 
 @Component({
   components: {
     EditorContent
   }
 })
-export default class TiptapContent extends Vue {
+export default class TiptapContent extends Mixins(Theme) {
   @Prop() private node!: NodeModel
   @Prop() private selected!: boolean
   @Prop() private focus!: () => void
@@ -56,7 +57,7 @@ export default class TiptapContent extends Vue {
 
   private textpos = {
     x: 15,
-    y: -10
+    y: -25
   }
 
   beforeDestroy() {
