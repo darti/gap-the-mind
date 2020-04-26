@@ -1,12 +1,18 @@
 <template>
-  <div id="app">
-    <MindMap>
-      <template #content="{node, selected, focus, update}">
-        <ConteTiptap :node="node" :selected="selected" :focus="focus" :update="update" />
-      </template>
-    </MindMap>
-    <MonacoEditor theme="vs-dark" language="json" height="calc(100vh - 10px)"></MonacoEditor>
-  </div>
+  <v-app id="app">
+    <v-content>
+      <v-container fluid class="fill-height">
+        <MindMap>
+          <template #content="{node, selected, focus, update}">
+            <ConteTiptap :node="node" :selected="selected" :focus="focus" :update="update" />
+          </template>
+        </MindMap>
+      </v-container>
+    </v-content>
+    <v-navigation-drawer app>
+      <MonacoEditor theme="vs-dark" language="json" height="calc(100vh - 10px)"></MonacoEditor>
+    </v-navigation-drawer>
+  </v-app>
 </template>
 
 <script lang="ts">
@@ -28,25 +34,7 @@ export default class App extends Vue {}
 </script>
 
 <style lang="stylus">
-html {
-  background-color: rgb(30, 32, 35);
-}
-
-body {
-  margin: 0;
-}
-
-MindMap {
-  flex: auto;
-}
-
-MonacoEditor {
-  flex: auto;
-}
-
-#app {
-  width: 100vw;
-  height: 100vh;
-  display: flex;
+.node {
+  color: black;
 }
 </style>

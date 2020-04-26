@@ -1,5 +1,5 @@
 <template>
-  <path class="link" v-bind:d="path" />
+  <path class="link" v-bind:d="path" style="fill: none" />
 </template>
 
 <script lang="ts">

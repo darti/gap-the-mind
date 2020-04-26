@@ -1,6 +1,11 @@
 <template>
   <a v-bind:xlink:href="'#' + node.id" v-on:click="select" tabindex="-1">
-    <g ref="node" class="node" v-bind:transform="transform" v-bind:class="[{ selected }]">
+    <g
+      ref="node"
+      class="node"
+      v-bind:transform="transform"
+      v-bind:class="[{ selected }]"
+    >
       <circle :r="tweenedR.value" />
       <slot
         name="content"

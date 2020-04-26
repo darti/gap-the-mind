@@ -15,12 +15,16 @@
           :link="link"
           class="link"
           v-bind:key="linkId(link)"
-        >
-        </Link>
+        ></Link>
       </transition-group>
 
       <transition-group tag="g" name="nodes">
-        <Node v-for="node in nodes" v-bind:key="node.id" :node="node" :position="position(node.id)">
+        <Node
+          v-for="node in nodes"
+          v-bind:key="node.id"
+          :node="node"
+          :position="position(node.id)"
+        >
           <template #anchor="{node, selected}">
             <slot
               name="anchor"
@@ -113,9 +117,9 @@ export default class MindMap extends Vue {
       if (e.code === "ArrowRight" && e.shiftKey) {
         nodes.addChild(nodes.selectedNodeId)
       } else if (e.code === "ArrowDown") {
-        nodes.addSibling({sibblingId: nodes.selectedNodeId, before: false})
+        nodes.addSibling({ sibblingId: nodes.selectedNodeId, before: false })
       } else if (e.code === "ArrowUp") {
-        nodes.addSibling({sibblingId: nodes.selectedNodeId, before:true})
+        nodes.addSibling({ sibblingId: nodes.selectedNodeId, before: true })
       }
     }
   }
@@ -128,21 +132,6 @@ export default class MindMap extends Vue {
 <style lang="stylus">
 
 @namespace svg url(http://www.w3.org/2000/svg);
-
-.node {
-  fill: white;
-  color white
-}
-
-.node.selected {
-
-}
-
-
-.link {
-  fill: none;
-  stroke: grey
-}
 
 #mindmap {
   width: 100%;
