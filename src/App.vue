@@ -4,7 +4,7 @@
       <v-container fluid class="fill-height">
         <MindMap>
           <template #content="{node, selected, focus, update}">
-            <ConteTiptap :node="node" :selected="selected" :focus="focus" :update="update" />
+            <ContentSimple :node="node" :selected="selected" :focus="focus" :update="update" />
           </template>
         </MindMap>
       </v-container>
@@ -21,12 +21,13 @@ import MindMap from "./components/MindMap.vue"
 import MonacoEditor from "monaco-editor-vue"
 
 import ContentSimple from "./components/content/ContentSimple.vue"
-import ConteTiptap from "./components/content/ContentTiptap.vue"
+import TiptapContent from "./components/content/ContentTiptap.vue"
+
 @Component({
   components: {
     MindMap,
     ContentSimple,
-    ConteTiptap,
+    TiptapContent,
     MonacoEditor
   }
 })
@@ -36,5 +37,9 @@ export default class App extends Vue {}
 <style lang="stylus">
 .node {
   color: black;
+}
+
+.link {
+  stroke: black;
 }
 </style>

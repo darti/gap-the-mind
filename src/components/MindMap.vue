@@ -25,14 +25,6 @@
           :node="node"
           :position="position(node.id)"
         >
-          <template #anchor="{node, selected}">
-            <slot
-              name="anchor"
-              v-bind:node="node"
-              v-bind:selected="selected"
-            ></slot>
-          </template>
-
           <template #content="{node, selected, focus, update, position}">
             <slot
               name="content"
