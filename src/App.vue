@@ -21,13 +21,11 @@ import MindMap from "./components/MindMap.vue"
 import MonacoEditor from "monaco-editor-vue"
 
 import ContentSimple from "./components/content/ContentSimple.vue"
-import TiptapContent from "./components/content/ContentTiptap.vue"
 
 @Component({
   components: {
     MindMap,
     ContentSimple,
-    TiptapContent,
     MonacoEditor
   }
 })
