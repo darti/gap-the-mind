@@ -1,6 +1,6 @@
 <template>
   <foreignObject height="50" width="100" v-bind:x="textpos.x" v-bind:y="textpos.y">
-    <div>{{ node.content }}</div>
+    <v-textarea :value="node.content" :autofocus="true" :auto-grow="true" :clearable="selected"></v-textarea>
   </foreignObject>
 </template>
 
@@ -20,7 +20,7 @@ export default class ContentSimple extends Vue {
 
   private textpos = {
     x: 15,
-    y: -10
+    y: -30
   }
 }
 </script>
