@@ -11,18 +11,23 @@ import {
 } from "vuex-module-decorators"
 
 import store from "@/store"
-import navigation from "./navigation"
 
 interface AddNodePayload {
   id: NodeId
   beforeId?: NodeId
+  before?: boolean
   parentId: NodeId
   focus?: boolean
 }
 
-@Module({ dynamic: true, store, name: "nodes" })
+@Module({
+  dynamic: true,
+  store,
+  name: "nodes",
+  preserveState: localStorage.getItem("vuex") !== null
+})
 class NodeModule extends VuexModule {
-  nodes = [
+  nodes: NodeModel[] = [
     {
       id: "0",
       content: "root"
@@ -44,8 +49,10 @@ class NodeModule extends VuexModule {
     }
   ]
 
+  selectedNodeId = "0"
+
   @Mutation
-  addNode({ id, parentId, beforeId }: AddNodePayload) {
+  addNode({ id, parentId, beforeId, before }: AddNodePayload) {
     const beforeIndex = beforeId
       ? this.nodes.findIndex(n => n.id === beforeId)
       : -1
@@ -53,10 +60,10 @@ class NodeModule extends VuexModule {
     const newNode = {
       id,
       parentId: parentId,
-      content: "Test"
+      content: id
     }
 
-    this.nodes.splice(beforeIndex + 1, 0, newNode)
+    this.nodes.splice(before ? beforeIndex : beforeIndex + 1, 0, newNode)
   }
 
   @Mutation
@@ -73,23 +80,40 @@ class NodeModule extends VuexModule {
     const id = uuidv4()
     this.addNode({ id, parentId: parentId })
 
-    navigation.selectNode(id)
+    this.selectNode(id)
   }
 
   @Action
-  addSibling(sibblingId: NodeId) {
+  addSibling({ sibblingId, before }: { sibblingId: NodeId; before: boolean }) {
     const sibbling = this.nodes.find(n => n.id === sibblingId)
 
     if (sibbling && sibbling.parentId) {
       const id = uuidv4()
-      this.addNode({ id, beforeId: sibblingId, parentId: sibbling.parentId })
+      this.addNode({
+        id,
+        beforeId: sibblingId,
+        parentId: sibbling.parentId,
+        before
+      })
 
-      navigation.selectNode(id)
+      this.selectNode(id)
     }
   }
 
   @Action updateContent(payload: { id: NodeId; newContent: any }) {
     this.setContent(payload)
+  }
+
+  @Mutation
+  setSelectNode(id: NodeId) {
+    this.selectedNodeId = id
+  }
+
+  @Action
+  selectNode(id: NodeId) {
+    if (this.selectedNodeId != id) {
+      this.setSelectNode(id)
+    }
   }
 }
 

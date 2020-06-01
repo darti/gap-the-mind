@@ -1,49 +1,43 @@
 <template>
-  <div id="app">
-    <MindMap>
-      <template #link="{link}">
-        <LinkPath :link="link" />
-      </template>
-      <template #anchor="{node, selected}">
-        <AnchorCircle :node="node" :selected="selected" />
-      </template>
-      <template #content="{node, selected, focus, update}">
-        <ContentTiptap :node="node" :selected="selected" :focus="focus" :update="update" />
-      </template>
-    </MindMap>
-  </div>
+  <v-app id="app">
+    <v-content>
+      <v-container fluid class="fill-height">
+        <MindMap>
+          <template #content="{node, selected, focus, update}">
+            <ContentSimple :node="node" :selected="selected" :focus="focus" :update="update" />
+          </template>
+        </MindMap>
+      </v-container>
+    </v-content>
+    <v-navigation-drawer app>
+      <MonacoEditor theme="vs-dark" language="json" height="calc(100vh - 10px)"></MonacoEditor>
+    </v-navigation-drawer>
+  </v-app>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator"
 import MindMap from "./components/MindMap.vue"
+import MonacoEditor from "monaco-editor-vue"
 
-import ContentTiptap from "./components/content/ContentTiptap.vue"
-import AnchorCircle from "./components/content/AnchorCircle.vue"
-import LinkPath from "./components/content/LinkPath.vue"
+import ContentSimple from "./components/content/ContentSimple.vue"
 
 @Component({
   components: {
     MindMap,
-    AnchorCircle,
-    ContentTiptap,
-    LinkPath
+    ContentSimple,
+    MonacoEditor
   }
 })
 export default class App extends Vue {}
 </script>
 
 <style lang="stylus">
-html {
-  background-color: rgb(30, 32, 35);
+.node {
+  color: black;
 }
 
-body {
-  margin: 0;
-}
-
-#app {
-  width: 100vw;
-  height: 100vh;
+.link {
+  stroke: black;
 }
 </style>

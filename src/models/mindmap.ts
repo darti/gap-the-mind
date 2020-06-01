@@ -1,3 +1,5 @@
+import { DefaultLinkObject } from "d3"
+
 export type NodeId = string
 
 export interface MindMapModel {
@@ -8,18 +10,33 @@ export interface NavigationModel {
   selectedNodeId: NodeId
 }
 
-export interface LayoutModel {
-  nodeSize: [number, number]
-  transform: string
+export interface PointModel {
+  x: number
+  y: number
 }
+
+export const OriginPoint: () => PointModel = () => ({
+  x: 0,
+  y: 0
+})
+
+export interface LayoutModel {
+  id: NodeId
+  position: PointModel
+}
+
+export type LayoutMap = { [id: string]: LayoutModel }
 
 export interface NodeModel {
   id: NodeId
   content: any
-  size?: number
   parentId?: NodeId
 }
 
-export type NodeLayoutModel = NodeModel & LayoutModel
+export interface LinkModel {
+  sourceId: string
+  targetId: string
 
-export interface LinkModel {}
+  source: PointModel
+  target: PointModel
+}
